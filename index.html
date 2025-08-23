@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap" rel="stylesheet">
+    <title>Photo Book</title>
+</head>
+<body>
+    <div class="container">
+        <div id = 'mainPage'>
+        <h1> Фотокниги</h1>
+        <p> Фотографии, собранные в книгу, — это портал в прошлое, позволяющий вернуться к дорогим моментам и прочувствовать их заново. </p>
+        <div class="img-container">
+            <img src="images/img1.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+            <img src="images/img2.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+            <img src="images/img3.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+        </div>
+        <button id="createBook" onclick="createBook()">Создать фотокнигу</button>
+    </div>
+    </div>
+    
+   
+<script>
+    window.addEventListener ('load', allScript,false);
+   
+    function allScript () {
+        const images = document.querySelectorAll('.imageMain');
+         images.forEach(img => {
+            setTimeout(() => {
+            img.style.opacity = '1';
+            }, 500); 
+          });
+       
+    
+    }
+    
+</script>
+</body>
+</html>
