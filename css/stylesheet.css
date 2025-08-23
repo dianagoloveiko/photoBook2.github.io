@@ -62,7 +62,8 @@ li {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      height: 400px; }
+      height: 400px;
+      width: 1200px; }
       .container #mainPage .img-container .imageMain {
         display: inline-block;
         opacity: 0;
