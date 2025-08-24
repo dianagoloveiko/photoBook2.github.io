@@ -39,7 +39,7 @@ li {
 }
 .container {
     margin: 20px 200px 20px 200px;
-    #mainPage {
+    #homePage {
         display: flex;
         flex-direction: column;
         align-content: center;
@@ -107,5 +107,15 @@ li {
       
     
 }
+    #mainPage {
+        display: none;
+        width: 100%;
+        font-size: 14px;
+        #loadedPhotos {
+            width: 30%;
+            height: 100vh;
+            border: solid black 1px;
+        }
+    }
 }
 

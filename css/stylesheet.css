@@ -38,7 +38,7 @@ li {
 
 .container {
   margin: 20px 200px 20px 200px; }
-  .container #mainPage {
+  .container #homePage {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -51,46 +51,46 @@ li {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center; }
-    .container #mainPage h1 {
+    .container #homePage h1 {
       font-size: 60px;
       text-align: center; }
-    .container #mainPage p {
+    .container #homePage p {
       margin-bottom: 100px;
       text-align: center; }
-    .container #mainPage .img-container {
+    .container #homePage .img-container {
       position: relative;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
       height: 400px;
       width: 100%; }
-      .container #mainPage .img-container .imageMain {
+      .container #homePage .img-container .imageMain {
         display: inline-block;
         opacity: 0;
         position: absolute;
         -webkit-transition: 2s;
         transition: 2s; }
-      .container #mainPage .img-container img:nth-child(1) {
+      .container #homePage .img-container img:nth-child(1) {
         left: 3%;
         top: 0px;
         width: 30%;
         -webkit-transform: rotate(-25deg);
                 transform: rotate(-25deg);
         z-index: 1; }
-      .container #mainPage .img-container img:nth-child(2) {
+      .container #homePage .img-container img:nth-child(2) {
         left: 27%;
         top: 0px;
         width: 50%;
         -webkit-transform: rotate(0deg);
                 transform: rotate(0deg); }
-      .container #mainPage .img-container img:nth-child(3) {
+      .container #homePage .img-container img:nth-child(3) {
         left: 70%;
         top: 0px;
         width: 30%;
         -webkit-transform: rotate(25deg);
                 transform: rotate(25deg);
         z-index: 1; }
-    .container #mainPage button {
+    .container #homePage button {
       margin: auto;
       width: 250px;
       height: 50px;
@@ -104,9 +104,17 @@ li {
       transition: 1s;
       -webkit-box-shadow: inset 1px 3px 1px #fff4;
               box-shadow: inset 1px 3px 1px #fff4; }
-    .container #mainPage button:hover {
+    .container #homePage button:hover {
       background: black;
       -webkit-transition: 1s;
       transition: 1s; }
+  .container #mainPage {
+    display: none;
+    width: 100%;
+    font-size: 14px; }
+    .container #mainPage #loadedPhotos {
+      width: 30%;
+      height: 100vh;
+      border: solid black 1px; }
 
 /*# sourceMappingURL=stylesheet.css.map */

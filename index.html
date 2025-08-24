@@ -11,33 +11,29 @@
 </head>
 <body>
     <div class="container">
-        <div id = 'mainPage'>
-        <h1> Фотокниги</h1>
-        <p> Фотографии, собранные в книгу, — это портал в прошлое, позволяющий вернуться к дорогим моментам и прочувствовать их заново. </p>
-        <div class="img-container">
-            <img src="images/img1.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
-            <img src="images/img2.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
-            <img src="images/img3.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+        <div id = 'homePage'>
+            <h1> Фотокниги</h1>
+            <p> Фотографии, собранные в книгу, — это портал в прошлое, позволяющий вернуться к дорогим моментам и прочувствовать их заново. </p>
+            <div class="img-container">
+                <img src="images/img1.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+                <img src="images/img2.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+                <img src="images/img3.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
+            </div>
+            <button id="createBook" onclick='createBook()'>Создать фотокнигу</button>
         </div>
-        <button id="createBook" onclick="createBook()">Создать фотокнигу</button>
+        <div id="mainPage">
+            <div id="loadedPhotos">
+                <p>Введите ссылку URL для добавления фото</p>
+                <input type="text" id="inputUrlImg">
+                <button onclick="addPhotoForLoad()" id="addPhotoForLoad">Добавить</button>
+                <div id="loadedPhotosContainer">
+                    
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
     
-   
-<script>
-    window.addEventListener ('load', allScript,false);
-   
-    function allScript () {
-        const images = document.querySelectorAll('.imageMain');
-         images.forEach(img => {
-            setTimeout(() => {
-            img.style.opacity = '1';
-            }, 500); 
-          });
-       
-    
-    }
-    
-</script>
+  
+<script src="js/init.js" ></script>
 </body>
 </html>
