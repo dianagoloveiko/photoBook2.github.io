@@ -38,7 +38,7 @@ li {
     opacity: 1;
 }
 .container {
-    margin: 20px 200px 20px 200px;
+    margin: 20px 100px 20px 100px;
     #homePage {
         display: flex;
         flex-direction: column;
@@ -109,13 +109,73 @@ li {
 }
     #mainPage {
         display: none;
+        flex-direction: row;
         width: 100%;
         font-size: 14px;
-        #loadedPhotos {
-            width: 30%;
+        #toolbar {
+            width: 5%;
             height: 100vh;
             border: solid black 1px;
         }
+        #loadedPhotos {
+            width: 28%;
+            height: 100vh;
+            border: solid black 1px;
+            .imgDiv {
+                width: 110px;
+                padding: 5px;
+                position: relative;
+                display: inline-block;
+            }
+            .closeSpan {
+                display: none;
+                 width: 20px;
+                 height :20px;
+                text-align: center;
+                background-color: red;
+                position: absolute;
+                color: white;
+                border-radius: 50%;
+                font-size: 12px;
+                line-height: 20px;
+                font-family: serif;
+                left: 90px;
+                top: 0px;
+            }
+            .closeSpan:hover {
+                cursor: pointer;
+            }
+            .imgDiv:hover {
+                
+                img {
+                    border: solid blue 2px;
+                }
+                .closeSpan {
+                    display: block;
+                }
+            }
+        }
+        #constructor {
+            width: 65%;
+            height: 100vh;
+            border: solid black 1px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            #redactor-field {
+                width: 90%;
+                border: solid black 1px;
+                height: 80vh;
+            }
+            #list-pages {
+                width: 100%;
+                border: solid black 1px;
+                height: 19vh;
+            }
+
+        }
+
     }
 }
 
