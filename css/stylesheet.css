@@ -163,29 +163,50 @@ li {
       text-align: center;
       -webkit-box-align: center;
           -ms-flex-align: center;
-              align-items: center; }
-      .container #mainPage #constructor #redactor-field {
+              align-items: center;
+      position: relative; }
+      .container #mainPage #constructor .page-field {
         width: 800px;
         border: solid black 1px;
         height: 550px;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
             -ms-flex-direction: row;
                 flex-direction: row;
         -ms-flex-pack: distribute;
             justify-content: space-around;
-        margin: 10px; }
-        .container #mainPage #constructor #redactor-field .page1 {
+        margin: 10px;
+        position: absolute;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center; }
+        .container #mainPage #constructor .page-field .page1 {
+          width: 500px;
+          overflow: hidden;
+          height: 500px;
+          -o-object-fit: cover;
+             object-fit: cover; }
+        .container #mainPage #constructor .page-field .page2 {
           width: 300px;
           height: 500px;
-          margin: 50px;
+          overflow: hidden; }
+        .container #mainPage #constructor .page-field .page3 {
+          width: 200px;
+          height: 500px;
+          overflow: hidden; }
+        .container #mainPage #constructor .page-field .page4 {
+          width: 300px;
+          height: 200px;
           overflow: hidden; }
       .container #mainPage #constructor #list-pages {
         width: 100%;
         border: solid black 1px;
-        height: 19vh; }
+        height: 100px;
+        margin-top: 600px; }
 
 /*# sourceMappingURL=stylesheet.css.map */
