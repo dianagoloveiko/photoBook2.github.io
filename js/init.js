@@ -126,12 +126,11 @@ window.addEventListener ('load', allScript,false);
 
     
     function drawPage (page) {                       //функция рисования страницы в зависимости от количества фото на ней
-        const constructor = document.getElementById('constructor');
+        const redactorField = document.getElementById('redactor-field');
         const pageField = document.createElement('div');
-        constructor.appendChild(pageField);
+        redactorField.appendChild(pageField);
         pageField.classList.add('page-field');
         const numPhotos = page.getPhotoCount();
-        console.log(numPhotos);
         
         for (i=0; i < numPhotos; i++) {
             const photoCont=document.createElement('div');
@@ -160,7 +159,44 @@ window.addEventListener ('load', allScript,false);
  
     
     drawPage(page4);
-
+    drawPage(page3);
+    drawPage(page1);
+    drawPage(page2);
+    const pageFields = document.querySelectorAll('.page-field');
+    let currentIndex=0;
+   
+    function setActivePage (index) {
+        
+        for (let i=0; i<pageFields.length; i++) {
+           
+            pageFields[i].classList.remove('active');
+             pageFields[i].style.transform = `translateX(${(i-index)*100}%)`;
+        }
+        pageFields[index].classList.add('active');
+        pageFields[index].style.transform = 'translateX(0)';
+    }
+    
+    function prevPage () {
+        if (currentIndex === 0) {
+            return;
+        } else {
+            currentIndex = (currentIndex-1+pageFields.length)%pageFields.length;
+        console.log(currentIndex);
+        
+        setActivePage (currentIndex);
+        }
+        
+    }
+    function nextPage() {
+        if (currentIndex === pageFields.length - 1) {
+            return;
+        } else {
+            currentIndex = (currentIndex+1)%pageFields.length;
+        setActivePage (currentIndex);
+        }
+        
+    }
+    setActivePage(currentIndex);
 
    /* function addPhotoForLoad () {                                     // по вводу каждой ссылки на фото создаем новый элемент класса Photo
         const imageURL = document.getElementById('inputUrlImg').value;

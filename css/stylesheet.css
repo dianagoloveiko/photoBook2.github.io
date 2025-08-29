@@ -151,62 +151,72 @@ li {
         display: block; }
     .container #mainPage #constructor {
       width: 900px;
-      height: 600px;
+      height: 710px;
       border: solid black 1px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: column;
-              flex-direction: column;
-      text-align: center;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
+      overflow: hidden;
       position: relative; }
-      .container #mainPage #constructor .page-field {
-        width: 800px;
+      .container #mainPage #constructor #redactor-field {
+        width: 900px;
+        height: 600px;
         border: solid black 1px;
-        height: 550px;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
-        -ms-flex-pack: distribute;
-            justify-content: space-around;
-        margin: 10px;
-        position: absolute;
+        text-align: center;
         -webkit-box-align: center;
             -ms-flex-align: center;
-                align-items: center; }
-        .container #mainPage #constructor .page-field .page1 {
-          width: 500px;
-          overflow: hidden;
-          height: 500px;
-          -o-object-fit: cover;
-             object-fit: cover; }
-        .container #mainPage #constructor .page-field .page2 {
-          width: 300px;
-          height: 500px;
-          overflow: hidden; }
-        .container #mainPage #constructor .page-field .page3 {
-          width: 200px;
-          height: 500px;
-          overflow: hidden; }
-        .container #mainPage #constructor .page-field .page4 {
-          width: 300px;
-          height: 200px;
-          overflow: hidden; }
+                align-items: center;
+        position: relative;
+        overflow: hidden; }
+        .container #mainPage #constructor #redactor-field .page-field {
+          width: 800px;
+          border: solid black 1px;
+          height: 550px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: row;
+                  flex-direction: row;
+          -ms-flex-pack: distribute;
+              justify-content: space-around;
+          margin: 10px;
+          position: absolute;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          top: 0;
+          left: 0;
+          -webkit-transition: 3s;
+          transition: 3s; }
+          .container #mainPage #constructor #redactor-field .page-field .page1 {
+            width: 500px;
+            overflow: hidden;
+            height: 500px;
+            -o-object-fit: cover;
+               object-fit: cover; }
+          .container #mainPage #constructor #redactor-field .page-field .page2 {
+            width: 300px;
+            height: 500px;
+            overflow: hidden; }
+          .container #mainPage #constructor #redactor-field .page-field .page3 {
+            width: 200px;
+            height: 500px;
+            overflow: hidden; }
+          .container #mainPage #constructor #redactor-field .page-field .page4 {
+            width: 300px;
+            height: 200px;
+            overflow: hidden; }
+        .container #mainPage #constructor #redactor-field .page-field:not(.active) {
+          -webkit-transform: translateX(-100%);
+                  transform: translateX(-100%); }
       .container #mainPage #constructor #list-pages {
         width: 100%;
         border: solid black 1px;
         height: 100px;
-        margin-top: 600px; }
+        margin-top: 10px; }
 
 /*# sourceMappingURL=stylesheet.css.map */

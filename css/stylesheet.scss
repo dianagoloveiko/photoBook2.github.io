@@ -157,14 +157,21 @@ li {
         }
         #constructor {
             width: 900px;
-            height: 600px;
+            height: 710px;
             border: solid black 1px;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            align-items: center;
+            overflow: hidden;
             position: relative;
-            .page-field {
+            #redactor-field {
+                width: 900px;
+                height: 600px;
+                border: solid black 1px;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+               
+                .page-field {
                 width: 800px;
                 border: solid black 1px;
                 height: 550px;
@@ -175,6 +182,9 @@ li {
                 margin: 10px;
                 position: absolute;
                 align-items: center;
+                top: 0;
+                left: 0;
+                transition:  3s;
                 .page1 {
                     width: 500px;
                     overflow: hidden;
@@ -190,18 +200,26 @@ li {
                     width: 200px;
                     height: 500px;   
                     overflow: hidden;
+                    
                 }
                 .page4 {
                     width: 300px;
                     height: 200px;   
                     overflow: hidden;
                 }
+
             }
+           
+           .page-field:not(.active) {
+                transform: translateX(-100%);
+            }
+            }
+            
             #list-pages {
                 width: 100%;
                 border: solid black 1px;
                 height: 100px;
-                margin-top: 600px;
+                margin-top: 10px;
             }
 
         }
