@@ -171,8 +171,8 @@ li {
                 position: relative;
                 overflow: hidden;
                
-                .page-field {
-                width: 800px;
+                .page-div {
+                width: 900px;
                 border: solid black 1px;
                 height: 550px;
                 display: flex;
@@ -185,27 +185,34 @@ li {
                 top: 0;
                 left: 0;
                 transition:  3s;
-                .page1 {
+                .buttonAddPhoto {
+                    position: absolute;
+                }
+                .one-photo {
                     width: 500px;
                     overflow: hidden;
                     height: 500px;
                     object-fit: cover;
+                    background-color: bisque;
                 }
-                .page2 {
+                .two-photo {
                     width: 300px;
                     height: 500px;
                     overflow: hidden;
+                    background-color: bisque;
                 }
                 .page3 {
                     width: 200px;
                     height: 500px;   
                     overflow: hidden;
+                    background-color: bisque;
                     
                 }
                 .page4 {
                     width: 300px;
                     height: 200px;   
                     overflow: hidden;
+                    background-color: bisque;
                 }
 
             }

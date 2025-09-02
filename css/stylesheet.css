@@ -168,8 +168,8 @@ li {
                 align-items: center;
         position: relative;
         overflow: hidden; }
-        .container #mainPage #constructor #redactor-field .page-field {
-          width: 800px;
+        .container #mainPage #constructor #redactor-field .page-div {
+          width: 900px;
           border: solid black 1px;
           height: 550px;
           display: -webkit-box;
@@ -192,24 +192,30 @@ li {
           left: 0;
           -webkit-transition: 3s;
           transition: 3s; }
-          .container #mainPage #constructor #redactor-field .page-field .page1 {
+          .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
+            position: absolute; }
+          .container #mainPage #constructor #redactor-field .page-div .one-photo {
             width: 500px;
             overflow: hidden;
             height: 500px;
             -o-object-fit: cover;
-               object-fit: cover; }
-          .container #mainPage #constructor #redactor-field .page-field .page2 {
+               object-fit: cover;
+            background-color: bisque; }
+          .container #mainPage #constructor #redactor-field .page-div .two-photo {
             width: 300px;
             height: 500px;
-            overflow: hidden; }
-          .container #mainPage #constructor #redactor-field .page-field .page3 {
+            overflow: hidden;
+            background-color: bisque; }
+          .container #mainPage #constructor #redactor-field .page-div .page3 {
             width: 200px;
             height: 500px;
-            overflow: hidden; }
-          .container #mainPage #constructor #redactor-field .page-field .page4 {
+            overflow: hidden;
+            background-color: bisque; }
+          .container #mainPage #constructor #redactor-field .page-div .page4 {
             width: 300px;
             height: 200px;
-            overflow: hidden; }
+            overflow: hidden;
+            background-color: bisque; }
         .container #mainPage #constructor #redactor-field .page-field:not(.active) {
           -webkit-transform: translateX(-100%);
                   transform: translateX(-100%); }

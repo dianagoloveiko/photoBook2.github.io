@@ -17,37 +17,17 @@ window.addEventListener ('load', allScript,false);
       
        }
 
-    /*class Photo {                                                 //описываем классы фото, страницы и альбом
-        constructor (containerID) {
-            this.container = document.getElementById(containerID);
-        }
-        createImage (src) {
-            const imgDiv = document.createElement('div');
-            const imgElem = document.createElement('img');
-            const closeSpan = document.createElement('span');
-            imgElem.src = src;
-            imgElem.alt = 'Ваше добавленное фото';
-            imgElem.style.width = '100px';
-            imgDiv.className = "imgDiv";
-            closeSpan.textContent= "x"
-            closeSpan.className = 'closeSpan';
-            this.container.appendChild(imgDiv);
-            imgDiv.appendChild(imgElem);
-            imgDiv.appendChild(closeSpan);
-            closeSpan.addEventListener('click', deleteImg, false);
-           
-            
-
-        }
-    }*/
+  
    class Photo {
-    constructor(url) {
+    constructor(url,description) {
         this.url = url;
+        this.description = description;
     }
    }
     class Page {
-        constructor(title) {
+        constructor(pageNumber,numPhotos) {
             this.photos = [];
+            this.numPhotos = numPhotos;
         }
         addPhoto (photo) {
             this.photos.push(photo);
@@ -61,10 +41,76 @@ window.addEventListener ('load', allScript,false);
         getPhotos() {
              return this.photos;
           }
-        getPhotoCount() {
-            return this.photos.length;
+        displayPage () {
+            const redactorField = document.getElementById('redactor-field');
+            const pageDiv = document.createElement('div');
+            redactorField.appendChild(pageDiv);
+            pageDiv.classList.add('page-div');
+            if (this.numPhotos === 1) {
+                const photoDiv=document.createElement('div');
+                photoDiv.classList.add ('photo-div');
+                const buttonAddPhoto = document.createElement('button');
+                buttonAddPhoto.classList.add('buttonAddPhoto');
+                buttonAddPhoto.textContent = 'Добавить фото';
+                photoDiv.appendChild(buttonAddPhoto);
+                buttonAddPhoto.addEventListener('click', () => this.createPhoto());
+                photoDiv.classList.add('one-photo');
+                pageDiv.appendChild(photoDiv);
+            }
+            if (this.numPhotos === 2) {
+                for (let i=1; i<3; i++) {
+                    const photoDiv=document.createElement('div');
+                    photoDiv.classList.add ('photo-div');
+                    photoDiv.classList.add('two-photo');
+                    photoDiv.id = `twoPhoto${i}`;
+                    const buttonAddPhoto = document.createElement('button');
+                    buttonAddPhoto.classList.add('buttonAddPhoto');
+                    buttonAddPhoto.textContent = 'Добавить фото';
+                    photoDiv.appendChild(buttonAddPhoto);
+                    buttonAddPhoto.addEventListener('click', () => this.createPhoto());
+                    pageDiv.appendChild(photoDiv);
+                }
+            }
+
+
+        }
+        createPhoto () {
+            const photoUrl = prompt('Введите url фото');
+            const photoDiscription = prompt ('Введите описание фото');
+            if (photoUrl) {
+                const newPhoto = new Photo(photoUrl, photoDiscription);
+                this.photos.push(newPhoto);
+                if (this.photos.length === 2) {
+                    this.displayPhoto2(newPhoto);
+                }
+                this.displayPhoto(newPhoto);
+            }
+        }
+        displayPhoto (photo) {
+            const photoDiv = document.querySelectorAll('.photo-div');
+            const photoDiv1= photoDiv[0];
+            const buttonAddPhoto = document.querySelector('.buttonAddPhoto');
+            const img = document.createElement('img');
+            img.src = photo.url;
+            img.style.width = '100%';
+            photoDiv1.appendChild(img);
+            photoDiv1.removeChild(buttonAddPhoto);
+        }
+        displayPhoto2 (photo) {
+            const photoDiv = document.querySelectorAll('.photo-div');
+            const photoDiv2= photoDiv[1];
+            const buttonAddPhoto = document.querySelectorAll('.buttonAddPhoto');
+            const buttonAddPhoto2 = buttonAddPhoto[1];
+            const img = document.createElement('img');
+            img.src = photo.url;
+            img.style.width = '100%';
+            photoDiv2.appendChild(img);
+            console.log (buttonAddPhoto);
+            console.log (buttonAddPhoto[1]);
+            photoDiv2.removeChild(buttonAddPhoto[0]);
         }
     }
+  
     class Album {
         constructor(title) {
             this.title = title; 
@@ -89,47 +135,23 @@ window.addEventListener ('load', allScript,false);
     }
 
     const myAlbum = new Album('Путешествия');
-    const page1 = new Page();
-    const page2 = new Page();
-    const page3 = new Page();
-    const page4 = new Page();
-    const page5 = new Page();
-
-    const img1 = new Photo('https://amiel.club/uploads/posts/2022-03/1647653856_1-amiel-club-p-krasivie-kartinki-puteshestviya-1.jpg');
-    const img2 = new Photo('https://krots.top/uploads/posts/2022-02/1644831473_5-krot-info-p-fon-turizm-5.jpg');
-    const img3 = new Photo('https://st.depositphotos.com/1000970/2346/i/450/depositphotos_23467114-stock-photo-couple-on-a-beach.jpg');
-    const img4 = new Photo('https://st.depositphotos.com/1000970/4291/i/450/depositphotos_42911817-stock-photo-couple-in-green-on-a.jpg');
-    const img5 = new Photo('https://cdn.pixabay.com/photo/2015/05/02/06/58/friends-749571_640.jpg');
-    const img6 = new Photo('https://static.aviasales.com/psgr-v2/ru/quickie/ang5_819x1024_8b9b360aa9.jpg?');
-
-    myAlbum.addPage(page1);
-    myAlbum.addPage(page2);
-    myAlbum.addPage(page3);
-    myAlbum.addPage(page4);
-    myAlbum.addPage(page5);
-
-    page1.addPhoto(img4);
-    page1.addPhoto(img6);
-
-    page2.addPhoto(img3);
-    page2.addPhoto(img4);
-    page2.addPhoto(img5);
-
-    page3.addPhoto(img6);
-
-    page4.addPhoto(img2);
-    page4.addPhoto(img3);
-    page4.addPhoto(img5);
-    page4.addPhoto(img6);
-
-    console.log(myAlbum);
-
+    /*const page1 = new Page(1,2);
+        page1.displayPage();*/
+   let numPage = 1;
     
-    function drawPage (page) {                       //функция рисования страницы в зависимости от количества фото на ней
+    function createPage (n) {
+        const newPage = new Page (numPage,n);
+        myAlbum.addPage(newPage);
+        newPage.displayPage();
+        numPage++;
+    }
+    
+    
+   /* function drawPage (page) {                       //функция рисования страницы в зависимости от количества фото на ней
         const redactorField = document.getElementById('redactor-field');
-        const pageField = document.createElement('div');
-        redactorField.appendChild(pageField);
-        pageField.classList.add('page-field');
+        const pageDiv = document.createElement('div');
+        redactorField.appendChild(pageDiv);
+        pageDiv.classList.add('page-div');
         const numPhotos = page.getPhotoCount();
         
         for (i=0; i < numPhotos; i++) {
@@ -155,28 +177,34 @@ window.addEventListener ('load', allScript,false);
             photoCont.appendChild(photo);
             pageField.appendChild(photoCont);
         }
-    }
+    
  
     
     drawPage(page4);
     drawPage(page3);
     drawPage(page1);
-    drawPage(page2);
-    const pageFields = document.querySelectorAll('.page-field');
+    
+   
     let currentIndex=0;
    
     function setActivePage (index) {
-        
-        for (let i=0; i<pageFields.length; i++) {
+         const pageFields = document.querySelectorAll('.page-field');
+         if (pageFields.length === 0) {
+            return;
+         } else {
+            for (let i=0; i<pageFields.length; i++) {
            
             pageFields[i].classList.remove('active');
              pageFields[i].style.transform = `translateX(${(i-index)*100}%)`;
         }
         pageFields[index].classList.add('active');
         pageFields[index].style.transform = 'translateX(0)';
+         }
+        
     }
     
     function prevPage () {
+         const pageFields = document.querySelectorAll('.page-field');
         if (currentIndex === 0) {
             return;
         } else {
@@ -188,6 +216,7 @@ window.addEventListener ('load', allScript,false);
         
     }
     function nextPage() {
+         const pageFields = document.querySelectorAll('.page-field');
         if (currentIndex === pageFields.length - 1) {
             return;
         } else {
@@ -197,6 +226,34 @@ window.addEventListener ('load', allScript,false);
         
     }
     setActivePage(currentIndex);
+
+    drawPage(page2);
+    setActivePage(currentIndex);
+   
+
+      /*class Photo {                                                 //описываем классы фото, страницы и альбом
+        constructor (containerID) {
+            this.container = document.getElementById(containerID);
+        }
+        createImage (src) {
+            const imgDiv = document.createElement('div');
+            const imgElem = document.createElement('img');
+            const closeSpan = document.createElement('span');
+            imgElem.src = src;
+            imgElem.alt = 'Ваше добавленное фото';
+            imgElem.style.width = '100px';
+            imgDiv.className = "imgDiv";
+            closeSpan.textContent= "x"
+            closeSpan.className = 'closeSpan';
+            this.container.appendChild(imgDiv);
+            imgDiv.appendChild(imgElem);
+            imgDiv.appendChild(closeSpan);
+            closeSpan.addEventListener('click', deleteImg, false);
+           
+            
+
+        }
+    }*/
 
    /* function addPhotoForLoad () {                                     // по вводу каждой ссылки на фото создаем новый элемент класса Photo
         const imageURL = document.getElementById('inputUrlImg').value;
