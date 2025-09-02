@@ -28,6 +28,7 @@ window.addEventListener ('load', allScript,false);
         constructor(pageNumber,numPhotos) {
             this.photos = [];
             this.numPhotos = numPhotos;
+            this.pageNumber = pageNumber;
         }
         addPhoto (photo) {
             this.photos.push(photo);
@@ -71,6 +72,20 @@ window.addEventListener ('load', allScript,false);
                     pageDiv.appendChild(photoDiv);
                 }
             }
+             if (this.numPhotos === 3) {
+                for (let i=1; i<4; i++) {
+                    const photoDiv=document.createElement('div');
+                    photoDiv.classList.add ('photo-div');
+                    photoDiv.classList.add('three-photo');
+                    photoDiv.id = `threePhoto${i}`;
+                    const buttonAddPhoto = document.createElement('button');
+                    buttonAddPhoto.classList.add('buttonAddPhoto');
+                    buttonAddPhoto.textContent = 'Добавить фото';
+                    photoDiv.appendChild(buttonAddPhoto);
+                    buttonAddPhoto.addEventListener('click', () => this.createPhoto());
+                    pageDiv.appendChild(photoDiv);
+                }
+            }
 
 
         }
@@ -80,16 +95,23 @@ window.addEventListener ('load', allScript,false);
             if (photoUrl) {
                 const newPhoto = new Photo(photoUrl, photoDiscription);
                 this.photos.push(newPhoto);
+                if (this.photos.length === 1) {
+                    this.displayPhoto(newPhoto);
+                }
                 if (this.photos.length === 2) {
                     this.displayPhoto2(newPhoto);
                 }
-                this.displayPhoto(newPhoto);
+                if (this.photos.length === 3) {
+                    this.displayPhoto3(newPhoto);
+                }
+                
             }
         }
         displayPhoto (photo) {
             const photoDiv = document.querySelectorAll('.photo-div');
             const photoDiv1= photoDiv[0];
-            const buttonAddPhoto = document.querySelector('.buttonAddPhoto');
+            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
+            const buttonAddPhoto=buttonsAddPhoto[0];
             const img = document.createElement('img');
             img.src = photo.url;
             img.style.width = '100%';
@@ -97,19 +119,31 @@ window.addEventListener ('load', allScript,false);
             photoDiv1.removeChild(buttonAddPhoto);
         }
         displayPhoto2 (photo) {
+            console.log (this.photos);
             const photoDiv = document.querySelectorAll('.photo-div');
             const photoDiv2= photoDiv[1];
-            const buttonAddPhoto = document.querySelectorAll('.buttonAddPhoto');
-            const buttonAddPhoto2 = buttonAddPhoto[1];
+            console.log (photoDiv2);
+            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
+            const buttonAddPhoto2 = buttonsAddPhoto[0];
             const img = document.createElement('img');
             img.src = photo.url;
             img.style.width = '100%';
             photoDiv2.appendChild(img);
-            console.log (buttonAddPhoto);
-            console.log (buttonAddPhoto[1]);
-            photoDiv2.removeChild(buttonAddPhoto[0]);
+           photoDiv2.removeChild(buttonAddPhoto2 );
+        }
+        displayPhoto3 (photo) {
+            const photoDiv = document.querySelectorAll('.photo-div');
+            const photoDiv3= photoDiv[2];
+            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
+            const buttonAddPhoto3 = buttonsAddPhoto[0];
+            const img = document.createElement('img');
+            img.src = photo.url;
+            img.style.width = '100%';
+            photoDiv3.appendChild(img);
+            photoDiv3.removeChild(buttonAddPhoto3);
         }
     }
+        
   
     class Album {
         constructor(title) {
@@ -182,33 +216,33 @@ window.addEventListener ('load', allScript,false);
     
     drawPage(page4);
     drawPage(page3);
-    drawPage(page1);
+    drawPage(page1);*/
     
    
-    let currentIndex=0;
+   /* let currentIndex=0;
    
     function setActivePage (index) {
-         const pageFields = document.querySelectorAll('.page-field');
-         if (pageFields.length === 0) {
+         const pageDivs = document.querySelectorAll('.page-div');
+         if (pageDivs.length === 0) {
             return;
          } else {
-            for (let i=0; i<pageFields.length; i++) {
+            for (let i=0; i<pageDivs.length; i++) {
            
-            pageFields[i].classList.remove('active');
-             pageFields[i].style.transform = `translateX(${(i-index)*100}%)`;
+            pageDivs[i].classList.remove('active');
+             pageDivs[i].style.transform = `translateX(${(i-index)*100}%)`;
         }
-        pageFields[index].classList.add('active');
-        pageFields[index].style.transform = 'translateX(0)';
+        pageDivs[index].classList.add('active');
+        pageDivs[index].style.transform = 'translateX(0)';
          }
         
     }
     
     function prevPage () {
-         const pageFields = document.querySelectorAll('.page-field');
+         const pageDivs = document.querySelectorAll('.page-div');
         if (currentIndex === 0) {
             return;
         } else {
-            currentIndex = (currentIndex-1+pageFields.length)%pageFields.length;
+            currentIndex = (currentIndex-1+pageDivs.length)%pageDivs.length;
         console.log(currentIndex);
         
         setActivePage (currentIndex);
@@ -216,19 +250,19 @@ window.addEventListener ('load', allScript,false);
         
     }
     function nextPage() {
-         const pageFields = document.querySelectorAll('.page-field');
-        if (currentIndex === pageFields.length - 1) {
+         const pageDivs = document.querySelectorAll('.page-div');
+        if (currentIndex === pageDivs.length - 1) {
             return;
         } else {
-            currentIndex = (currentIndex+1)%pageFields.length;
+            currentIndex = (currentIndex+1)%pageDivs.length;
         setActivePage (currentIndex);
         }
         
     }
     setActivePage(currentIndex);
 
-    drawPage(page2);
-    setActivePage(currentIndex);
+    //drawPage(page2);
+   
    
 
       /*class Photo {                                                 //описываем классы фото, страницы и альбом
