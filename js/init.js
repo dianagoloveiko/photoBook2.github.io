@@ -42,7 +42,7 @@ window.addEventListener ('load', allScript,false);
         getPhotos() {
              return this.photos;
           }
-        displayPage () {
+        displayPage () {                                 //создаем шаблон страницы
             const redactorField = document.getElementById('redactor-field');
             const pageDiv = document.createElement('div');
             redactorField.appendChild(pageDiv);
@@ -50,9 +50,13 @@ window.addEventListener ('load', allScript,false);
             if (this.numPhotos === 1) {
                 const photoDiv=document.createElement('div');
                 photoDiv.classList.add ('photo-div');
+                photoDiv.classList.add('one-photo');
                 const buttonAddPhoto = document.createElement('button');
                 buttonAddPhoto.classList.add('buttonAddPhoto');
                 buttonAddPhoto.textContent = 'Добавить фото';
+                buttonAddPhoto.id = 'oneButton';
+                photoDiv.dataset.index = `11`;
+                     buttonAddPhoto.dataset.index = `11`;
                 photoDiv.appendChild(buttonAddPhoto);
                 buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                 photoDiv.classList.add('one-photo');
@@ -67,6 +71,9 @@ window.addEventListener ('load', allScript,false);
                     const buttonAddPhoto = document.createElement('button');
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
+                    buttonAddPhoto.id = `twoButton${i}`;
+                     photoDiv.dataset.index = `2${i}`;
+                     buttonAddPhoto.dataset.index = `2${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
@@ -78,9 +85,30 @@ window.addEventListener ('load', allScript,false);
                     photoDiv.classList.add ('photo-div');
                     photoDiv.classList.add('three-photo');
                     photoDiv.id = `threePhoto${i}`;
+                   
                     const buttonAddPhoto = document.createElement('button');
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
+                    buttonAddPhoto.id = `threeButton${i}`;
+                     photoDiv.dataset.index = `3${i}`;
+                     buttonAddPhoto.dataset.index = `3${i}`;
+                    photoDiv.appendChild(buttonAddPhoto);
+                    buttonAddPhoto.addEventListener('click', () => this.createPhoto());
+                    pageDiv.appendChild(photoDiv);
+                }
+            }
+             if (this.numPhotos === 4) {
+                for (let i=1; i<5; i++) {
+                    const photoDiv=document.createElement('div');
+                    photoDiv.classList.add ('photo-div');
+                    photoDiv.classList.add('four-photo');
+                    photoDiv.id = `fourPhoto${i}`;
+                    const buttonAddPhoto = document.createElement('button');
+                    buttonAddPhoto.classList.add('buttonAddPhoto');
+                    buttonAddPhoto.textContent = 'Добавить фото';
+                    buttonAddPhoto.id = `fourButton${i}`;
+                     photoDiv.dataset.index = `4${i}`;
+                     buttonAddPhoto.dataset.index = `4${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
@@ -88,60 +116,28 @@ window.addEventListener ('load', allScript,false);
             }
 
 
+
         }
-        createPhoto () {
+        createPhoto (eo) {                                   //добавляем фото в див-контейнер
+           const clickedButton = event.target;
+           console.log (clickedButton);
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
-            if (photoUrl) {
-                const newPhoto = new Photo(photoUrl, photoDiscription);
+            const index = clickedButton.dataset.index;
+            const newPhoto = new Photo(photoUrl, photoDiscription);
                 this.photos.push(newPhoto);
-                if (this.photos.length === 1) {
-                    this.displayPhoto(newPhoto);
-                }
-                if (this.photos.length === 2) {
-                    this.displayPhoto2(newPhoto);
-                }
-                if (this.photos.length === 3) {
-                    this.displayPhoto3(newPhoto);
-                }
-                
-            }
-        }
-        displayPhoto (photo) {
-            const photoDiv = document.querySelectorAll('.photo-div');
-            const photoDiv1= photoDiv[0];
-            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
-            const buttonAddPhoto=buttonsAddPhoto[0];
-            const img = document.createElement('img');
-            img.src = photo.url;
+            console.log (index);
+           const photoDivs = document.querySelectorAll('.photo-div');
+           const photoDivClicked =  Array.from(photoDivs).find(div => div.dataset.index === index );
+           console.log(photoDivClicked);
+           const img = document.createElement('img');
+            img.src = newPhoto.url;
             img.style.width = '100%';
-            photoDiv1.appendChild(img);
-            photoDiv1.removeChild(buttonAddPhoto);
+            photoDivClicked.appendChild(img);
+            clickedButton.remove();
+            
         }
-        displayPhoto2 (photo) {
-            console.log (this.photos);
-            const photoDiv = document.querySelectorAll('.photo-div');
-            const photoDiv2= photoDiv[1];
-            console.log (photoDiv2);
-            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
-            const buttonAddPhoto2 = buttonsAddPhoto[0];
-            const img = document.createElement('img');
-            img.src = photo.url;
-            img.style.width = '100%';
-            photoDiv2.appendChild(img);
-           photoDiv2.removeChild(buttonAddPhoto2 );
-        }
-        displayPhoto3 (photo) {
-            const photoDiv = document.querySelectorAll('.photo-div');
-            const photoDiv3= photoDiv[2];
-            const buttonsAddPhoto = document.querySelectorAll('.buttonAddPhoto');
-            const buttonAddPhoto3 = buttonsAddPhoto[0];
-            const img = document.createElement('img');
-            img.src = photo.url;
-            img.style.width = '100%';
-            photoDiv3.appendChild(img);
-            photoDiv3.removeChild(buttonAddPhoto3);
-        }
+       
     }
         
   
@@ -169,8 +165,7 @@ window.addEventListener ('load', allScript,false);
     }
 
     const myAlbum = new Album('Путешествия');
-    /*const page1 = new Page(1,2);
-        page1.displayPage();*/
+
    let numPage = 1;
     
     function createPage (n) {
@@ -180,43 +175,6 @@ window.addEventListener ('load', allScript,false);
         numPage++;
     }
     
-    
-   /* function drawPage (page) {                       //функция рисования страницы в зависимости от количества фото на ней
-        const redactorField = document.getElementById('redactor-field');
-        const pageDiv = document.createElement('div');
-        redactorField.appendChild(pageDiv);
-        pageDiv.classList.add('page-div');
-        const numPhotos = page.getPhotoCount();
-        
-        for (i=0; i < numPhotos; i++) {
-            const photoCont=document.createElement('div');
-            const photo = document.createElement('img');
-            photo.src = page.photos[i].url;
-            photo.style.width = '100%';
-            switch (numPhotos) {
-                case 1:
-                    photoCont.classList.add('page1');
-                    break;
-                case 2:
-                    photoCont.classList.add('page2');
-                    break;
-                case 3:
-                    photoCont.classList.add('page3');
-                    break;
-                case 4:
-                    photoCont.classList.add('page4');
-                    break;
-            }
-           
-            photoCont.appendChild(photo);
-            pageField.appendChild(photoCont);
-        }
-    
- 
-    
-    drawPage(page4);
-    drawPage(page3);
-    drawPage(page1);*/
     
    
    /* let currentIndex=0;
@@ -261,7 +219,7 @@ window.addEventListener ('load', allScript,false);
     }
     setActivePage(currentIndex);
 
-    //drawPage(page2);
+
    
    
 
