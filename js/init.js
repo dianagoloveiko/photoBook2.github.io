@@ -17,7 +17,7 @@ window.addEventListener ('load', allScript,false);
       
        }
 
-       let currentIndex=0;
+       let currentIndex=1;
   
    class Photo {
     constructor(url,description) {
@@ -203,65 +203,56 @@ window.addEventListener ('load', allScript,false);
    let numPage = 1;
     
     function createPage (n) {
-        const albumLength = myAlbum.pages.length;
-        if (albumLength !== 0) {
-            const pages = document.querySelectorAll('.page-div');
-            const prevPage =  Array.from(pages).find(div => div.dataset.pageNumber === `${numPage -1}` );
-            console.log (prevPage);
-            prevPage.style.transform = "translateX(-100%)";
-            prevPage.style.zIndex = "1";
-            
-        }
+        
         const newPage = new Page (numPage,n);
         myAlbum.addPage(newPage);
         newPage.displayPage();
+        const pages = document.querySelectorAll('.page-div');
         numPage++;
-        
-    }
-    
-    
-   
-   
-   
-    function setActivePage (index) {
-         const pageDivs = document.querySelectorAll('.page-div');
-         if (pageDivs.length === 0) {
-            return;
-         } else {
-            for (let i=0; i<pageDivs.length; i++) {
-           
-            pageDivs[i].classList.remove('active');
-             pageDivs[i].style.transform = `translateX(${(i-index)*100}%)`;
+        const albumLength = myAlbum.pages.length;
+        console.log (pages);
+        console.log(albumLength);
+        const activePage = pages[albumLength-1];
+        const numbActivePage = activePage.getAttribute('data-page-number');
+        console.log (activePage);
+        activePage.classList.add('active');
+        for (let i=0; i<pages.length-1; i++) {
+            const page = pages[i];
+            page.classList.remove('active');
         }
-        pageDivs[index].classList.add('active');
-        pageDivs[index].style.transform = 'translateX(0)';
-         }
-        
     }
     
     function prevPage () {
          const pageDivs = document.querySelectorAll('.page-div');
-        if (currentIndex === 0) {
+         const activePage = Array.from(pageDivs ).find(div => div.classList.contains('active'));
+         console.log (activePage);
+         const activePageNum = activePage.getAttribute('data-page-number');
+         if (activePageNum === "1") {
             return;
-        } else {
-            currentIndex = (currentIndex-1+pageDivs.length)%pageDivs.length;
-        console.log(currentIndex);
-        
-        setActivePage (currentIndex);
-        }
-        
+         } else {
+            activePage.classList.remove('active');
+         const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${activePageNum-1}`);
+         newActivePage.classList.add('active');
+         console.log (newActivePage);
+         }
+
     }
     function nextPage() {
          const pageDivs = document.querySelectorAll('.page-div');
-        if (currentIndex === pageDivs.length - 1) {
+         const activePage = Array.from(pageDivs ).find(div => div.classList.contains('active'));
+         console.log (activePage);
+         const activePageNum = activePage.getAttribute('data-page-number');
+         console.log (activePageNum);
+         if (activePageNum == pageDivs.length) {
             return;
-        } else {
-            currentIndex = (currentIndex+1)%pageDivs.length;
-        setActivePage (currentIndex);
-        }
-        
+         } else {
+            activePage.classList.remove('active');
+         const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${parseFloat(activePageNum) + 1 }`);
+         console.log (newActivePage);
+         newActivePage.classList.add('active');
+         }
     }
-    //setActivePage(currentIndex);
+
 
 
    

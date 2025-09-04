@@ -185,6 +185,7 @@ li {
                 top: 0;
                 left: 0;
                 transition:  3s;
+                
                 .buttonAddPhoto {
                     position: absolute;
                 }
@@ -222,8 +223,9 @@ li {
 
             }
            
-           .page-field:not(.active) {
+           .page-div:not(.active) {
                 transform: translateX(-100%);
+                z-index: 2;
             }
             }
             
