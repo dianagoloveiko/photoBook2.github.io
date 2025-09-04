@@ -17,6 +17,7 @@ window.addEventListener ('load', allScript,false);
       
        }
 
+       let currentIndex=0;
   
    class Photo {
     constructor(url,description) {
@@ -45,6 +46,7 @@ window.addEventListener ('load', allScript,false);
         displayPage () {                                 //создаем шаблон страницы
             const redactorField = document.getElementById('redactor-field');
             const pageDiv = document.createElement('div');
+            pageDiv.dataset.pageNumber = this.pageNumber;
             redactorField.appendChild(pageDiv);
             pageDiv.classList.add('page-div');
             if (this.numPhotos === 1) {
@@ -114,8 +116,21 @@ window.addEventListener ('load', allScript,false);
                     pageDiv.appendChild(photoDiv);
                 }
             }
-
-
+            if (this.numPhotos === 0) {
+                    const buttonAddPhoto = document.createElement('button');
+                    buttonAddPhoto.classList.add('buttonAddPhoto');
+                    buttonAddPhoto.textContent = 'Добавить фото';
+                    buttonAddPhoto.id = `nullButton`;
+                    buttonAddPhoto.dataset.index = `0`;
+                    const buttonFinishAdding = document.createElement('button');
+                    buttonFinishAdding.textContent = 'Закончить добавление фото';
+                    buttonFinishAdding.classList.add('buttonFinishAdding');
+                    buttonFinishAdding.id = `finishAddPhotoButton`;
+                    pageDiv.appendChild(buttonFinishAdding);
+                    pageDiv.appendChild(buttonAddPhoto);
+                    buttonAddPhoto.addEventListener('click', () => this.addPhotoAbsolute());
+                    buttonFinishAdding.addEventListener('click', () => this.finishAdding());
+            }
 
         }
         createPhoto (eo) {                                   //добавляем фото в див-контейнер
@@ -134,11 +149,30 @@ window.addEventListener ('load', allScript,false);
             img.src = newPhoto.url;
             img.style.width = '100%';
             photoDivClicked.appendChild(img);
-            clickedButton.remove();
-            
+            clickedButton.remove();  
+        } 
+         addPhotoAbsolute () {                           //добавляем абсолютно-спозиционированное фото на пустую страницу
+            const pageDiv = document.querySelector('.page-div');
+            const photoUrl = prompt('Введите url фото');
+            const photoDiscription = prompt ('Введите описание фото');
+            const newPhoto = new Photo(photoUrl, photoDiscription);
+            this.photos.push(newPhoto);
+            const img = document.createElement('img');
+            img.src = newPhoto.url;
+            img.style.width = '300px';
+            img.style.position = 'absolute';
+            img.style.left = '10px';
+            img.style.top = '10px';
+            pageDiv.appendChild(img);
         }
-       
+        finishAdding () {                      //убираем кноки добавить фото с пустой страницы
+            const buttonAddPhoto = document.getElementById('nullButton');
+            const buttonFinishAdding = document.getElementById('finishAddPhotoButton');
+            buttonAddPhoto.remove();
+            buttonFinishAdding.remove();
+        }
     }
+       
         
   
     class Album {
@@ -169,15 +203,25 @@ window.addEventListener ('load', allScript,false);
    let numPage = 1;
     
     function createPage (n) {
+        const albumLength = myAlbum.pages.length;
+        if (albumLength !== 0) {
+            const pages = document.querySelectorAll('.page-div');
+            const prevPage =  Array.from(pages).find(div => div.dataset.pageNumber === `${numPage -1}` );
+            console.log (prevPage);
+            prevPage.style.transform = "translateX(-100%)";
+            prevPage.style.zIndex = "1";
+            
+        }
         const newPage = new Page (numPage,n);
         myAlbum.addPage(newPage);
         newPage.displayPage();
         numPage++;
+        
     }
     
     
    
-   /* let currentIndex=0;
+   
    
     function setActivePage (index) {
          const pageDivs = document.querySelectorAll('.page-div');
@@ -217,7 +261,7 @@ window.addEventListener ('load', allScript,false);
         }
         
     }
-    setActivePage(currentIndex);
+    //setActivePage(currentIndex);
 
 
    

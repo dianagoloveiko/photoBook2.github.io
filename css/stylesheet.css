@@ -193,6 +193,10 @@ li {
           transition: 3s; }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }
+          .container #mainPage #constructor #redactor-field .page-div .buttonFinishAdding {
+            position: absolute;
+            left: 40%;
+            top: 90%; }
           .container #mainPage #constructor #redactor-field .page-div .one-photo {
             width: 500px;
             overflow: hidden;
