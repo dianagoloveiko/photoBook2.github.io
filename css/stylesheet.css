@@ -190,7 +190,9 @@ li {
           top: 0;
           left: 0;
           -webkit-transition: 3s;
-          transition: 3s; }
+          transition: 3s;
+          -webkit-transform: translateX(-100%);
+                  transform: translateX(-100%); }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }
           .container #mainPage #constructor #redactor-field .page-div .buttonFinishAdding {
@@ -219,10 +221,16 @@ li {
             height: 200px;
             overflow: hidden;
             background-color: bisque; }
-        .container #mainPage #constructor #redactor-field .page-div:not(.active) {
-          -webkit-transform: translateX(-100%);
-                  transform: translateX(-100%);
+        .container #mainPage #constructor #redactor-field .page-div.active {
+          -webkit-transform: translateX(0);
+                  transform: translateX(0);
           z-index: 2; }
+        .container #mainPage #constructor #redactor-field .page-div.prev {
+          -webkit-transform: translateX(100%);
+                  transform: translateX(100%); }
+        .container #mainPage #constructor #redactor-field .page-div.next {
+          -webkit-transform: translateX(-100%);
+                  transform: translateX(-100%); }
       .container #mainPage #constructor #list-pages {
         width: 100%;
         border: solid black 1px;

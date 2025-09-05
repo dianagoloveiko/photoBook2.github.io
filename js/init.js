@@ -148,6 +148,7 @@ window.addEventListener ('load', allScript,false);
            const img = document.createElement('img');
             img.src = newPhoto.url;
             img.style.width = '100%';
+            img.classList.add ("photo-in-div");
             photoDivClicked.appendChild(img);
             clickedButton.remove();  
         } 
@@ -163,6 +164,7 @@ window.addEventListener ('load', allScript,false);
             img.style.position = 'absolute';
             img.style.left = '10px';
             img.style.top = '10px';
+            img.classList.add ("photo-in-div") ;
             pageDiv.appendChild(img);
         }
         finishAdding () {                      //убираем кноки добавить фото с пустой страницы
@@ -216,6 +218,7 @@ window.addEventListener ('load', allScript,false);
         const numbActivePage = activePage.getAttribute('data-page-number');
         console.log (activePage);
         activePage.classList.add('active');
+
         for (let i=0; i<pages.length-1; i++) {
             const page = pages[i];
             page.classList.remove('active');
@@ -231,7 +234,9 @@ window.addEventListener ('load', allScript,false);
             return;
          } else {
             activePage.classList.remove('active');
+            activePage.classList.add('prev');
          const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${activePageNum-1}`);
+         newActivePage.classList.remove('next');
          newActivePage.classList.add('active');
          console.log (newActivePage);
          }
@@ -247,14 +252,27 @@ window.addEventListener ('load', allScript,false);
             return;
          } else {
             activePage.classList.remove('active');
+            activePage.classList.add('next');
          const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${parseFloat(activePageNum) + 1 }`);
          console.log (newActivePage);
+         newActivePage.classList.remove('prev');
          newActivePage.classList.add('active');
          }
     }
 
-
-
+     const allPhotos = document.querySelectorAll('photo-in-div');
+     for (let i=0; i<allPhotos.length; i++) {
+        const photo = allPhotos[i];
+        photo.addEventListener('mousedown', deletePhoto);
+     }
+    //const redactorField = document.getElementById('redactor-field');
+    //redactorField.addEventListener('mousedown', deletePhoto);
+    function deletePhoto (eo) {
+        eo=eo||window.event;
+        //eo.preventDefault();
+        const currentImage = eo.target;
+        console.log(currentImage);
+    }
    
    
 

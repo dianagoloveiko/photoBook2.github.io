@@ -185,7 +185,7 @@ li {
                 top: 0;
                 left: 0;
                 transition:  3s;
-                
+                transform: translateX(-100%);
                 .buttonAddPhoto {
                     position: absolute;
                 }
@@ -220,15 +220,25 @@ li {
                     overflow: hidden;
                     background-color: bisque;
                 }
+                
 
             }
-           
-           .page-div:not(.active) {
-                transform: translateX(-100%);
+           .page-div.active {
+                transform: translateX(0);
                 z-index: 2;
+           }
+          
+            .page-div.prev {
+                transform: translateX(100%);
             }
+            .page-div.next {
+                transform: translateX(-100%);
             }
+
             
+            
+            }
+           
             #list-pages {
                 width: 100%;
                 border: solid black 1px;
