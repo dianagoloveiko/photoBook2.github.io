@@ -127,6 +127,7 @@ window.addEventListener ('load', allScript,false);
                     buttonFinishAdding.classList.add('buttonFinishAdding');
                     buttonFinishAdding.id = `finishAddPhotoButton`;
                     pageDiv.appendChild(buttonFinishAdding);
+                    pageDiv.classList.add('emptyPage');
                     pageDiv.appendChild(buttonAddPhoto);
                     buttonAddPhoto.addEventListener('click', () => this.addPhotoAbsolute());
                     buttonFinishAdding.addEventListener('click', () => this.finishAdding());
@@ -150,10 +151,12 @@ window.addEventListener ('load', allScript,false);
             img.style.width = '100%';
             img.classList.add ("photo-in-div");
             photoDivClicked.appendChild(img);
-            clickedButton.remove();  
+            img.addEventListener('mouseenter', buttonDeletePhoto);
+            img.addEventListener('mouseleave', stopDeletePhoto);
+            clickedButton.style.display = 'none';  
         } 
          addPhotoAbsolute () {                           //добавляем абсолютно-спозиционированное фото на пустую страницу
-            const pageDiv = document.querySelector('.page-div');
+            const pageDiv = document.querySelector('.emptyPage');
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
             const newPhoto = new Photo(photoUrl, photoDiscription);
@@ -260,18 +263,35 @@ window.addEventListener ('load', allScript,false);
          }
     }
 
-     const allPhotos = document.querySelectorAll('photo-in-div');
-     for (let i=0; i<allPhotos.length; i++) {
-        const photo = allPhotos[i];
-        photo.addEventListener('mousedown', deletePhoto);
-     }
-    //const redactorField = document.getElementById('redactor-field');
-    //redactorField.addEventListener('mousedown', deletePhoto);
-    function deletePhoto (eo) {
+    
+    let buttonDelete;
+    function buttonDeletePhoto (eo) {
+        eo=eo||window.event;
+        //eo.preventDefault();
+        const currentImage = eo.target;
+        const currentDiv = currentImage.parentNode;
+        console.log(currentImage);
+        console.log(currentDiv);
+        console.log('удалить фото');
+         buttonDelete = document.createElement('button');
+        buttonDelete.classList.add('buttonAddPhoto');
+        buttonDelete.style.left = "45%";
+        buttonDelete.style.top = "10%";
+        buttonDelete.textContent = 'удалить фото';
+        buttonDelete.addEventListener('click', deletePhoto)
+        currentDiv.appendChild(buttonDelete);
+    }
+    function stopDeletePhoto (eo) {
         eo=eo||window.event;
         //eo.preventDefault();
         const currentImage = eo.target;
         console.log(currentImage);
+        console.log('перестать удалить фото');
+        buttonDelete.remove();
+    }
+    function deletePhoto () {
+         const clickedButton = event.target;
+         console.log('кликаю');
     }
    
    

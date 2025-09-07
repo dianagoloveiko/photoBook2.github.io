@@ -186,6 +186,9 @@ li {
                 left: 0;
                 transition:  3s;
                 transform: translateX(-100%);
+                .photo-div {
+                    position: relative;
+                }
                 .buttonAddPhoto {
                     position: absolute;
                 }

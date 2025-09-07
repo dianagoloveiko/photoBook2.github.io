@@ -193,6 +193,8 @@ li {
           transition: 3s;
           -webkit-transform: translateX(-100%);
                   transform: translateX(-100%); }
+          .container #mainPage #constructor #redactor-field .page-div .photo-div {
+            position: relative; }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }
           .container #mainPage #constructor #redactor-field .page-div .buttonFinishAdding {
