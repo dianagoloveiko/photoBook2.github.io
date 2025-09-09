@@ -17,12 +17,15 @@ window.addEventListener ('load', allScript,false);
       
        }
 
-       let currentIndex=1;
+    document.addEventListener ('mouseup', onMouseUp, false);  
+
+       let photoNumber=1;
   
    class Photo {
-    constructor(url,description) {
+    constructor(photoNumber,url,description) {
         this.url = url;
         this.description = description;
+        this.photoNumber = photoNumber;
     }
    }
     class Page {
@@ -60,6 +63,7 @@ window.addEventListener ('load', allScript,false);
                 photoDiv.dataset.index = `11`;
                      buttonAddPhoto.dataset.index = `11`;
                 photoDiv.appendChild(buttonAddPhoto);
+               //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                 buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                 photoDiv.classList.add('one-photo');
                 pageDiv.appendChild(photoDiv);
@@ -77,6 +81,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `2${i}`;
                      buttonAddPhoto.dataset.index = `2${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
+                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }
@@ -95,6 +100,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `3${i}`;
                      buttonAddPhoto.dataset.index = `3${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
+                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }
@@ -112,6 +118,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `4${i}`;
                      buttonAddPhoto.dataset.index = `4${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
+                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }
@@ -121,7 +128,7 @@ window.addEventListener ('load', allScript,false);
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
                     buttonAddPhoto.id = `nullButton`;
-                    buttonAddPhoto.dataset.index = `0`;
+                    buttonAddPhoto.dataset.index = this.pageNumber;
                     const buttonFinishAdding = document.createElement('button');
                     buttonFinishAdding.textContent = 'Закончить добавление фото';
                     buttonFinishAdding.classList.add('buttonFinishAdding');
@@ -140,7 +147,8 @@ window.addEventListener ('load', allScript,false);
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
             const index = clickedButton.dataset.index;
-            const newPhoto = new Photo(photoUrl, photoDiscription);
+            const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription);
+           
                 this.photos.push(newPhoto);
             console.log (index);
            const photoDivs = document.querySelectorAll('.photo-div');
@@ -150,25 +158,47 @@ window.addEventListener ('load', allScript,false);
             img.src = newPhoto.url;
             img.style.width = '100%';
             img.classList.add ("photo-in-div");
+            img.dataset.photoNumber = photoNumber;
+             photoNumber++;
             photoDivClicked.appendChild(img);
-            img.addEventListener('mouseenter', buttonDeletePhoto);
-            img.addEventListener('mouseleave', stopDeletePhoto);
+            const buttonDelete = document.createElement('button');
+            buttonDelete.classList.add('buttonDeletePhoto');
+            buttonDelete.textContent = 'удалить фото';
+            photoDivClicked.appendChild(buttonDelete);
+            buttonDelete.addEventListener('click', deletePhoto)
+            /*img.addEventListener('mouseenter', buttonDeletePhoto);
+            img.addEventListener('mouseleave', stopDeletePhoto);*/
             clickedButton.style.display = 'none';  
         } 
-         addPhotoAbsolute () {                           //добавляем абсолютно-спозиционированное фото на пустую страницу
-            const pageDiv = document.querySelector('.emptyPage');
+         addPhotoAbsolute (eo) {   
+            const clickedButton = event.target;                       //создаем контейнер и фотографию в нем
+            const index = clickedButton.getAttribute('data-index');
+            const pagesDiv = document.querySelectorAll('.emptyPage');
+            const pageDiv = Array.from(pagesDiv).find(div => div.dataset.pageNumber === index );
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
-            const newPhoto = new Photo(photoUrl, photoDiscription);
+            const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription);
             this.photos.push(newPhoto);
+            const photoDiv = document.createElement('div');
+            photoDiv.classList.add('photo-div');
+            photoDiv.style.position = 'absolute';
+            photoDiv.style.left = '10%';
+            photoDiv.style.top = '10%';
+            photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
             const img = document.createElement('img');
             img.src = newPhoto.url;
             img.style.width = '300px';
-            img.style.position = 'absolute';
+            //img.style.position = 'absolute';
             img.style.left = '10px';
             img.style.top = '10px';
             img.classList.add ("photo-in-div") ;
-            pageDiv.appendChild(img);
+             const buttonDelete = document.createElement('button');
+            buttonDelete.classList.add('buttonDeletePhoto');
+            buttonDelete.textContent = 'удалить фото';
+            photoDiv.appendChild(buttonDelete);
+            buttonDelete.addEventListener('click', deletePhoto)
+            pageDiv.appendChild(photoDiv);
+            photoDiv.appendChild(img);
         }
         finishAdding () {                      //убираем кноки добавить фото с пустой страницы
             const buttonAddPhoto = document.getElementById('nullButton');
@@ -215,11 +245,8 @@ window.addEventListener ('load', allScript,false);
         const pages = document.querySelectorAll('.page-div');
         numPage++;
         const albumLength = myAlbum.pages.length;
-        console.log (pages);
-        console.log(albumLength);
         const activePage = pages[albumLength-1];
         const numbActivePage = activePage.getAttribute('data-page-number');
-        console.log (activePage);
         activePage.classList.add('active');
 
         for (let i=0; i<pages.length-1; i++) {
@@ -231,7 +258,6 @@ window.addEventListener ('load', allScript,false);
     function prevPage () {
          const pageDivs = document.querySelectorAll('.page-div');
          const activePage = Array.from(pageDivs ).find(div => div.classList.contains('active'));
-         console.log (activePage);
          const activePageNum = activePage.getAttribute('data-page-number');
          if (activePageNum === "1") {
             return;
@@ -241,59 +267,127 @@ window.addEventListener ('load', allScript,false);
          const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${activePageNum-1}`);
          newActivePage.classList.remove('next');
          newActivePage.classList.add('active');
-         console.log (newActivePage);
          }
 
     }
     function nextPage() {
          const pageDivs = document.querySelectorAll('.page-div');
          const activePage = Array.from(pageDivs ).find(div => div.classList.contains('active'));
-         console.log (activePage);
          const activePageNum = activePage.getAttribute('data-page-number');
-         console.log (activePageNum);
          if (activePageNum == pageDivs.length) {
             return;
          } else {
             activePage.classList.remove('active');
             activePage.classList.add('next');
          const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${parseFloat(activePageNum) + 1 }`);
-         console.log (newActivePage);
          newActivePage.classList.remove('prev');
          newActivePage.classList.add('active');
          }
     }
 
     
-    let buttonDelete;
-    function buttonDeletePhoto (eo) {
+    function deletePhoto (eo) {                  // удаляем фото с экрана и возвращаем кнопку добавить фото
+         const clickedButton = eo.target;
+         const clickedDiv = clickedButton.parentNode;
+         const childrenElems = clickedDiv.childNodes;
+         let clickedImg;
+         for (let i = 0; i < childrenElems.length; i++) {
+            const element = childrenElems[i];
+            if (element.tagName === 'IMG') {
+             clickedImg = element;
+                break; 
+              }
+        }
+        const numberOfClickedImg = clickedImg.getAttribute('data-photo-number');
+        clickedDiv.removeChild(clickedImg);
+        clickedDiv.removeChild(clickedButton);
+        const buttonAddPhoto = clickedDiv.childNodes[0];
+        if (buttonAddPhoto) {
+            buttonAddPhoto.style.display= 'block';
+        }
+        
+        const activePage = document.querySelector('.page-div.active');
+        const numActivePage = activePage.getAttribute('data-page-number');
+        for (let i=0; i< myAlbum.pages.length; i++) {                         //удаляем объект photo из массива в объекте page
+            const page = myAlbum.pages[i];
+            if (page.pageNumber == numActivePage) {
+                console.log ('нужная страница найдена');
+                console.log (page.photos);
+                for (let i=0; i<page.photos.length; i++) {
+                    const photo = page.photos[i];
+                    if (photo.photoNumber == numberOfClickedImg) {
+                        page.photos.splice(i,1);
+                        console.log(page);
+                    }
+                }
+            }
+        }
+         console.log(myAlbum);
+    }
+    let draggedElem = null;
+    let startX, startY, startWidth, startHeight, startContainerX, startContainerY, imgX, imgY, startPageX, startPageY;
+
+    function onMouseDown(eo) {
         eo=eo||window.event;
-        //eo.preventDefault();
-        const currentImage = eo.target;
-        const currentDiv = currentImage.parentNode;
-        console.log(currentImage);
-        console.log(currentDiv);
-        console.log('удалить фото');
-         buttonDelete = document.createElement('button');
-        buttonDelete.classList.add('buttonAddPhoto');
-        buttonDelete.style.left = "45%";
-        buttonDelete.style.top = "10%";
-        buttonDelete.textContent = 'удалить фото';
-        buttonDelete.addEventListener('click', deletePhoto)
-        currentDiv.appendChild(buttonDelete);
+        eo.preventDefault();
+        draggedElem = eo.target;
+        console.log (draggedElem);
+        const container = draggedElem.parentNode;
+        const page = container.parentNode;
+        console.log (container);
+        console.log (page);
+        startX = eo.clientX ;     //запоминаем координаты клика
+        startY = eo.clientY ;
+        imgX = eo.clientX - container.offsetLeft;
+        imgY = eo.clientY - container.offsetTop;
+         startWidth = container.offsetWidth;        //запоминаем начальные размеры
+        startHeight = container.offsetHeight;
+        startRightBottomX = startX-imgX+startWidth;  //запоминаем координаты правой нижней точки 
+        startRightBottomY = startY-imgY + startHeight;
+        startContainerX = container.offsetLeft;
+        startContainerY = container.offsetTop; 
+        startPageX = page.offsetLeft;
+        startPageY = page.offsetTop;
+            document.addEventListener ('mousemove', onMouseMove, false);   
+        
     }
-    function stopDeletePhoto (eo) {
+     function onMouseMove (eo) {
+        
+         eo=eo||window.event;
+                eo.preventDefault(); 
+                 draggedElem = eo.target;
+            if (draggedElem.tagName === 'IMG')  {
+                const container = draggedElem.parentNode;
+                const page = container.parentNode;
+               
+              container.style.left=(eo.clientX - imgX) +"px";   //перемещаем координаты клика по курсору
+              container.style.top=(eo.clientY- imgY) +"px";
+             
+              console.log (container.offsetLeft);
+              if (container.offsetLeft < 0) {
+                container.style.left = '0px';
+              }
+              if (container.offsetTop < 0) {
+                container.style.top = '0px';
+              }
+              if (container.offsetLeft + container.offsetWidth > page.offsetWidth) {
+                container.style.left = page.offsetWidth - container.offsetWidth + 'px';
+              }
+              if (container.offsetTop + container.offsetHeight > page.offsetHeight) {
+                container.style.top = page.offsetHeight - container.offsetHeight + 'px';
+              }
+            }
+                
+     }
+     function onMouseUp (eo) {
         eo=eo||window.event;
-        //eo.preventDefault();
-        const currentImage = eo.target;
-        console.log(currentImage);
-        console.log('перестать удалить фото');
-        buttonDelete.remove();
-    }
-    function deletePhoto () {
-         const clickedButton = event.target;
-         console.log('кликаю');
-    }
-   
+            eo.preventDefault();
+            if (draggedElem) {
+                draggedElem = null; 
+            } 
+           
+            document.removeEventListener ('mousemove', onMouseMove, false);
+     }
    
 
       /*class Photo {                                                 //описываем классы фото, страницы и альбом

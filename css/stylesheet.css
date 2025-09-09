@@ -155,7 +155,7 @@ li {
       overflow: hidden;
       position: relative; }
       .container #mainPage #constructor #redactor-field {
-        width: 900px;
+        width: 850px;
         height: 600px;
         border: solid black 1px;
         display: -webkit-box;
@@ -168,7 +168,7 @@ li {
         position: relative;
         overflow: hidden; }
         .container #mainPage #constructor #redactor-field .page-div {
-          width: 900px;
+          width: 850px;
           border: solid black 1px;
           height: 550px;
           display: -webkit-box;
@@ -182,7 +182,6 @@ li {
                   flex-direction: row;
           -ms-flex-pack: distribute;
               justify-content: space-around;
-          margin: 10px;
           position: absolute;
           -webkit-box-align: center;
               -ms-flex-align: center;
@@ -195,6 +194,13 @@ li {
                   transform: translateX(-100%); }
           .container #mainPage #constructor #redactor-field .page-div .photo-div {
             position: relative; }
+            .container #mainPage #constructor #redactor-field .page-div .photo-div .buttonDeletePhoto {
+              position: absolute;
+              left: 40%;
+              top: 10%;
+              display: none; }
+          .container #mainPage #constructor #redactor-field .page-div .photo-div:hover .buttonDeletePhoto {
+            display: block; }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }
           .container #mainPage #constructor #redactor-field .page-div .buttonFinishAdding {

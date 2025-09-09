@@ -162,7 +162,7 @@ li {
             overflow: hidden;
             position: relative;
             #redactor-field {
-                width: 900px;
+                width: 850px;
                 height: 600px;
                 border: solid black 1px;
                 display: flex;
@@ -172,14 +172,14 @@ li {
                 overflow: hidden;
                
                 .page-div {
-                width: 900px;
+                width: 850px;
                 border: solid black 1px;
                 height: 550px;
                 display: flex;
                 flex-wrap: wrap;
                 flex-direction: row;
                 justify-content: space-around;
-                margin: 10px;
+                //margin: 10px;
                 position: absolute;
                 align-items: center;
                 top: 0;
@@ -187,11 +187,25 @@ li {
                 transition:  3s;
                 transform: translateX(-100%);
                 .photo-div {
-                    position: relative;
+                    position: relative; 
+                    .buttonDeletePhoto {
+                        position: absolute;
+                        left: 40%;
+                        top: 10%;
+                        display: none;
+                }  
                 }
+                .photo-div:hover {
+                    .buttonDeletePhoto {
+                        display: block;
+                    }
+                }
+                
                 .buttonAddPhoto {
                     position: absolute;
                 }
+                
+                
                 .buttonFinishAdding {
                     position: absolute;
                     left: 40%;
