@@ -63,7 +63,7 @@ window.addEventListener ('load', allScript,false);
                 photoDiv.dataset.index = `11`;
                      buttonAddPhoto.dataset.index = `11`;
                 photoDiv.appendChild(buttonAddPhoto);
-               //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
+               photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                 buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                 photoDiv.classList.add('one-photo');
                 pageDiv.appendChild(photoDiv);
@@ -72,6 +72,12 @@ window.addEventListener ('load', allScript,false);
                 for (let i=1; i<3; i++) {
                     const photoDiv=document.createElement('div');
                     photoDiv.classList.add ('photo-div');
+                    if (i==1) {
+                        photoDiv.style.left = '10%';
+                    }
+                    if (i==2) {
+                        photoDiv.style.left = '55%';
+                    }
                     photoDiv.classList.add('two-photo');
                     photoDiv.id = `twoPhoto${i}`;
                     const buttonAddPhoto = document.createElement('button');
@@ -81,7 +87,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `2${i}`;
                      buttonAddPhoto.dataset.index = `2${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
-                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
+                    photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }
@@ -92,7 +98,15 @@ window.addEventListener ('load', allScript,false);
                     photoDiv.classList.add ('photo-div');
                     photoDiv.classList.add('three-photo');
                     photoDiv.id = `threePhoto${i}`;
-                   
+                   if (i==1) {
+                        photoDiv.style.left = '10%';
+                    }
+                    if (i==2) {
+                        photoDiv.style.left = '38%';
+                    }
+                    if (i==3) {
+                        photoDiv.style.left = '65%';
+                    }
                     const buttonAddPhoto = document.createElement('button');
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
@@ -100,7 +114,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `3${i}`;
                      buttonAddPhoto.dataset.index = `3${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
-                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
+                    photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }
@@ -111,6 +125,22 @@ window.addEventListener ('load', allScript,false);
                     photoDiv.classList.add ('photo-div');
                     photoDiv.classList.add('four-photo');
                     photoDiv.id = `fourPhoto${i}`;
+                    if (i==1) {
+                        photoDiv.style.left = '10%';
+                        photoDiv.style.top = '10%';
+                    }
+                    if (i==2) {
+                        photoDiv.style.left = '55%';
+                        photoDiv.style.top = '10%';
+                    }
+                    if (i==3) {
+                        photoDiv.style.left = '10%';
+                        photoDiv.style.top = '50%';
+                    }
+                    if (i==4) {
+                        photoDiv.style.left = '55%';
+                        photoDiv.style.top = '50%';
+                    }
                     const buttonAddPhoto = document.createElement('button');
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
@@ -118,7 +148,7 @@ window.addEventListener ('load', allScript,false);
                      photoDiv.dataset.index = `4${i}`;
                      buttonAddPhoto.dataset.index = `4${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
-                    //photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
+                    photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                     pageDiv.appendChild(photoDiv);
                 }

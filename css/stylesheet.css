@@ -193,7 +193,7 @@ li {
           -webkit-transform: translateX(-100%);
                   transform: translateX(-100%); }
           .container #mainPage #constructor #redactor-field .page-div .photo-div {
-            position: relative; }
+            position: absolute; }
             .container #mainPage #constructor #redactor-field .page-div .photo-div .buttonDeletePhoto {
               position: absolute;
               left: 40%;
