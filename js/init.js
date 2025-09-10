@@ -241,18 +241,18 @@ window.addEventListener ('load', allScript,false);
                     break;
                     case 2:
                         sizeElem.dataset.size = 'tr';
-                        sizeElem.style.left = '98%';
+                        sizeElem.style.right = '0';
                         sizeElem.style.top = '0';
                         break;
                     case 3:
                         sizeElem.dataset.size = 'br';
-                        sizeElem.style.left = '98%';
-                        sizeElem.style.top = '98%';
+                        sizeElem.style.right = '0';
+                        sizeElem.style.bottom = '0';
                         break;
                     case 4:
                         sizeElem.dataset.size = 'bl';
                         sizeElem.style.left = '0';
-                        sizeElem.style.top = '98%';
+                        sizeElem.style.bottom = '0';
                         break;
                 }
             }
@@ -384,7 +384,7 @@ window.addEventListener ('load', allScript,false);
          console.log(myAlbum);
     }
     let draggedElem = null;
-    let startX, startY, startWidth, startHeight, startContainerX, startContainerY, imgX, imgY, startPageX, startPageY;
+    let startX, startY, startWidth, startHeight, startContainerX, startContainerY, imgX, imgY, startPageX, startPageY, startLeftBottomX, startLeftBottomY;
 
     function onMouseDown(eo) {
         eo=eo||window.event;
@@ -401,6 +401,8 @@ window.addEventListener ('load', allScript,false);
         startHeight = container.offsetHeight;
         startRightBottomX = startX-imgX+startWidth;  //запоминаем координаты правой нижней точки 
         startRightBottomY = startY-imgY + startHeight;
+        startLeftBottomX = startX-imgX+startWidth;  //запоминаем координаты левой нижней точки 
+        startLeftBottomY = startY-imgY + startHeight;
         startContainerX = container.offsetLeft;
         startContainerY = container.offsetTop; 
         startPageX = page.offsetLeft;
@@ -444,7 +446,7 @@ window.addEventListener ('load', allScript,false);
                         container.style.height = startHeight - newY +'px';
                         container.style.width = startWidth * container.offsetHeight/startHeight + 'px';
                         container.style.top = startContainerY + newY + 'px';
-                        container.style.left = startContainerY + 'px';
+                        container.style.bottom = startLeftBottomY + 'px';
                         break;
                     case 'br' :
                         container.style.height = startHeight + newY +'px';
