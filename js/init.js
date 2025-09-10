@@ -214,19 +214,48 @@ window.addEventListener ('load', allScript,false);
             photoDiv.style.position = 'absolute';
             photoDiv.style.left = '10%';
             photoDiv.style.top = '10%';
+            photoDiv.style.width = '30%';
             photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
             const img = document.createElement('img');
             img.src = newPhoto.url;
-            img.style.width = '300px';
-            //img.style.position = 'absolute';
-            img.style.left = '10px';
-            img.style.top = '10px';
+            img.style.width = '100%';
             img.classList.add ("photo-in-div") ;
              const buttonDelete = document.createElement('button');
             buttonDelete.classList.add('buttonDeletePhoto');
             buttonDelete.textContent = 'удалить фото';
             photoDiv.appendChild(buttonDelete);
+            console.log (photoDiv.offsetWidth);
             buttonDelete.addEventListener('click', deletePhoto)
+            for (let i=1; i<=4; i++) {                          //создаем управляющие элементы
+                const sizeElem = document.createElement('div');
+                sizeElem.classList.add('elemResize');
+                photoDiv.appendChild(sizeElem);
+                sizeElem.addEventListener ('mousedown', onMouseDown, false);
+                console.log (photoDiv.offsetWidth);
+                    console.log (sizeElem.offsetWidth);
+                switch (i) {
+                    case 1: 
+                        sizeElem.dataset.size = 'tl';
+                        sizeElem.style.left = '0';
+                        sizeElem.style.top = '0';
+                    break;
+                    case 2:
+                        sizeElem.dataset.size = 'tr';
+                        sizeElem.style.left = '98%';
+                        sizeElem.style.top = '0';
+                        break;
+                    case 3:
+                        sizeElem.dataset.size = 'br';
+                        sizeElem.style.left = '98%';
+                        sizeElem.style.top = '98%';
+                        break;
+                    case 4:
+                        sizeElem.dataset.size = 'bl';
+                        sizeElem.style.left = '0';
+                        sizeElem.style.top = '98%';
+                        break;
+                }
+            }
             pageDiv.appendChild(photoDiv);
             photoDiv.appendChild(img);
         }
@@ -361,16 +390,14 @@ window.addEventListener ('load', allScript,false);
         eo=eo||window.event;
         eo.preventDefault();
         draggedElem = eo.target;
-        console.log (draggedElem);
         const container = draggedElem.parentNode;
         const page = container.parentNode;
-        console.log (container);
-        console.log (page);
+ 
         startX = eo.clientX ;     //запоминаем координаты клика
         startY = eo.clientY ;
         imgX = eo.clientX - container.offsetLeft;
         imgY = eo.clientY - container.offsetTop;
-         startWidth = container.offsetWidth;        //запоминаем начальные размеры
+        startWidth = container.offsetWidth;        //запоминаем начальные размеры
         startHeight = container.offsetHeight;
         startRightBottomX = startX-imgX+startWidth;  //запоминаем координаты правой нижней точки 
         startRightBottomY = startY-imgY + startHeight;
@@ -385,15 +412,14 @@ window.addEventListener ('load', allScript,false);
         
          eo=eo||window.event;
                 eo.preventDefault(); 
-                 draggedElem = eo.target;
+               
             if (draggedElem.tagName === 'IMG')  {
                 const container = draggedElem.parentNode;
                 const page = container.parentNode;
                
               container.style.left=(eo.clientX - imgX) +"px";   //перемещаем координаты клика по курсору
               container.style.top=(eo.clientY- imgY) +"px";
-             
-              console.log (container.offsetLeft);
+
               if (container.offsetLeft < 0) {
                 container.style.left = '0px';
               }
@@ -406,6 +432,37 @@ window.addEventListener ('load', allScript,false);
               if (container.offsetTop + container.offsetHeight > page.offsetHeight) {
                 container.style.top = page.offsetHeight - container.offsetHeight + 'px';
               }
+            }
+            if (draggedElem.className === 'elemResize') {
+                eo.preventDefault();
+                const newX = eo.clientX - startX;   //насколько переместилось
+                const newY = eo.clientY - startY;
+                const container = draggedElem.parentNode;
+                const page = container.parentNode;
+                switch (draggedElem.getAttribute('data-size')) {
+                    case 'tr' :
+                        container.style.height = startHeight - newY +'px';
+                        container.style.width = startWidth * container.offsetHeight/startHeight + 'px';
+                        container.style.top = startContainerY + newY + 'px';
+                        container.style.left = startContainerY + 'px';
+                        break;
+                    case 'br' :
+                        container.style.height = startHeight + newY +'px';
+                        container.style.width = startWidth * container.offsetHeight/startHeight + 'px';
+                        break;
+                    case 'bl' :
+                        container.style.width = startWidth - newX +'px';
+                        container.style.height = startHeight * container.offsetWidth/startWidth + 'px';
+                        container.style.left = startContainerX + newX + 'px';
+                        break;
+                    case 'tl' :
+                       container.style.width =  startWidth - newX +'px';
+                       container.style.height = startHeight * container.offsetWidth/startWidth + 'px';
+                       container.style.left  = startRightBottomX-container.offsetWidth +'px';
+                       container.style.top = startRightBottomY-container.offsetHeight +'px';
+                 
+                        break;
+                }
             }
                 
      }

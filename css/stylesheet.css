@@ -199,7 +199,17 @@ li {
               left: 40%;
               top: 10%;
               display: none; }
+            .container #mainPage #constructor #redactor-field .page-div .photo-div .elemResize {
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              background-color: blueviolet;
+              z-index: 1;
+              cursor: pointer;
+              display: none; }
           .container #mainPage #constructor #redactor-field .page-div .photo-div:hover .buttonDeletePhoto {
+            display: block; }
+          .container #mainPage #constructor #redactor-field .page-div .photo-div:hover .elemResize {
             display: block; }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }

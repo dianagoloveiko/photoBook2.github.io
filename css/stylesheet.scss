@@ -192,11 +192,23 @@ li {
                         position: absolute;
                         left: 40%;
                         top: 10%;
+                        display: none;   
+                    }  
+                    .elemResize {
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        background-color: blueviolet;
+                        z-index: 1;
+                        cursor: pointer;
                         display: none;
-                }  
+                    }
                 }
                 .photo-div:hover {
                     .buttonDeletePhoto {
+                        display: block;
+                    }
+                    .elemResize {
                         display: block;
                     }
                 }
