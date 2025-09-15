@@ -118,7 +118,7 @@ li {
             border: solid black 1px;
         }
         #loadedPhotos {
-            width: 28%;
+            width: 20%;
             height: 100vh;
             border: solid black 1px;
             .imgDiv {
@@ -156,14 +156,14 @@ li {
             }
         }
         #constructor {
-            width: 900px;
+            width: 70%;
             height: 710px;
             border: solid black 1px;
             overflow: hidden;
             position: relative;
             #redactor-field {
-                width: 850px;
-                height: 600px;
+                width: 100%;
+                min-height: 600px;
                 border: solid black 1px;
                 display: flex;
                 text-align: center;
@@ -172,9 +172,9 @@ li {
                 overflow: hidden;
                
                 .page-div {
-                width: 850px;
+                width: 95%;
                 border: solid black 1px;
-                height: 550px;
+                min-height: 600px;
                 display: flex;
                 flex-wrap: wrap;
                 flex-direction: row;
@@ -224,20 +224,20 @@ li {
                     top: 90%;
                 }
                 .one-photo {
-                    width: 500px;
+                    width: 70%;
                     overflow: hidden;
                     height: 500px;
                     object-fit: cover;
                     background-color: bisque;
                 }
                 .two-photo {
-                    width: 300px;
+                    width: 40%;
                     height: 500px;
                     overflow: hidden;
                     background-color: bisque;
                 }
                 .three-photo {
-                    width: 200px;
+                    width: 25%;
                     height: 500px;   
                     overflow: hidden;
                     background-color: bisque;

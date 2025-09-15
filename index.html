@@ -15,6 +15,7 @@
             <h1> Фотокниги</h1>
             <p> Фотографии, собранные в книгу, — это портал в прошлое, позволяющий вернуться к дорогим моментам и прочувствовать их заново. </p>
             <button id="createBook" onclick='createBook()'>Создать фотокнигу</button>
+            <button id="createBook" onclick='loadBook()'>Загрузить фотокнигу</button>
             <div class="img-container">
                 <img src="images/img1.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
                 <img src="images/img2.jpg" class="imageMain" title="фотокнига" alt="фотокнига">
@@ -41,13 +42,15 @@
                     <button class="type-of-page" onclick="createPage(3)">3</button>
                     <button class="type-of-page" onclick="createPage(4)">4</button>
                     <button class="type-of-page" onclick="createPage(0)">0</button>
+                    <br>
+                    <button onclick="saveToAjax()">Сохранить проект</button>
                 </div>
             </div>
             
         </div>
     </div>
     
-  
+<script src='https://fe.it-academy.by/JQ/jquery.js'></script>
 <script src="js/init.js" ></script>
 </body>
 </html>

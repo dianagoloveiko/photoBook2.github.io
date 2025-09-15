@@ -11,26 +11,39 @@ window.addEventListener ('load', allScript,false);
 
     const homePage = document.getElementById('homePage');
     const mainPage = document.getElementById('mainPage');
+    
+    let nameAlbum, myAlbum;
     function createBook() {    
         homePage.style.display = 'none';
         mainPage.style.display = 'flex';
-      
+         nameAlbum = prompt('Введите название альбома'); 
+         myAlbum = new Album(nameAlbum);
        }
+
+    
+        
+    
+   
 
     document.addEventListener ('mouseup', onMouseUp, false);  
 
        let photoNumber=1;
   
    class Photo {
-    constructor(photoNumber,url,description) {
+    constructor(photoNumber,url,description,posX,posY) {
         this.url = url;
         this.description = description;
         this.photoNumber = photoNumber;
+        this.posX = posX;
+        this.posY = posY;
     }
+      static fromJSON (data) {
+        return new Photo(data.photoNumber, data.url, data.description);
+      } 
    }
     class Page {
-        constructor(pageNumber,numPhotos) {
-            this.photos = [];
+        constructor(pageNumber,numPhotos, photos =[]) {
+            this.photos = photos;
             this.numPhotos = numPhotos;
             this.pageNumber = pageNumber;
         }
@@ -60,8 +73,6 @@ window.addEventListener ('load', allScript,false);
                 buttonAddPhoto.classList.add('buttonAddPhoto');
                 buttonAddPhoto.textContent = 'Добавить фото';
                 buttonAddPhoto.id = 'oneButton';
-                photoDiv.dataset.index = `11`;
-                     buttonAddPhoto.dataset.index = `11`;
                 photoDiv.appendChild(buttonAddPhoto);
                photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                 buttonAddPhoto.addEventListener('click', () => this.createPhoto());
@@ -84,8 +95,6 @@ window.addEventListener ('load', allScript,false);
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
                     buttonAddPhoto.id = `twoButton${i}`;
-                     photoDiv.dataset.index = `2${i}`;
-                     buttonAddPhoto.dataset.index = `2${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
                     photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
@@ -111,8 +120,6 @@ window.addEventListener ('load', allScript,false);
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
                     buttonAddPhoto.id = `threeButton${i}`;
-                     photoDiv.dataset.index = `3${i}`;
-                     buttonAddPhoto.dataset.index = `3${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
                     photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
@@ -145,8 +152,6 @@ window.addEventListener ('load', allScript,false);
                     buttonAddPhoto.classList.add('buttonAddPhoto');
                     buttonAddPhoto.textContent = 'Добавить фото';
                     buttonAddPhoto.id = `fourButton${i}`;
-                     photoDiv.dataset.index = `4${i}`;
-                     buttonAddPhoto.dataset.index = `4${i}`;
                     photoDiv.appendChild(buttonAddPhoto);
                     photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
                     buttonAddPhoto.addEventListener('click', () => this.createPhoto());
@@ -176,19 +181,18 @@ window.addEventListener ('load', allScript,false);
            console.log (clickedButton);
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
-            const index = clickedButton.dataset.index;
-            const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription);
+           const photoDivClicked = clickedButton.parentNode;
+           const posX = photoDivClicked.offsetLeft;
+           const posY = photoDivClicked.offsetTop;
+           const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription,posX, posY);
            
                 this.photos.push(newPhoto);
-            console.log (index);
-           const photoDivs = document.querySelectorAll('.photo-div');
-           const photoDivClicked =  Array.from(photoDivs).find(div => div.dataset.index === index );
-           console.log(photoDivClicked);
            const img = document.createElement('img');
             img.src = newPhoto.url;
             img.style.width = '100%';
             img.classList.add ("photo-in-div");
             img.dataset.photoNumber = photoNumber;
+            
              photoNumber++;
             photoDivClicked.appendChild(img);
             const buttonDelete = document.createElement('button');
@@ -196,25 +200,27 @@ window.addEventListener ('load', allScript,false);
             buttonDelete.textContent = 'удалить фото';
             photoDivClicked.appendChild(buttonDelete);
             buttonDelete.addEventListener('click', deletePhoto)
-            /*img.addEventListener('mouseenter', buttonDeletePhoto);
-            img.addEventListener('mouseleave', stopDeletePhoto);*/
+
             clickedButton.style.display = 'none';  
         } 
          addPhotoAbsolute (eo) {   
             const clickedButton = event.target;                       //создаем контейнер и фотографию в нем
-            const index = clickedButton.getAttribute('data-index');
-            const pagesDiv = document.querySelectorAll('.emptyPage');
-            const pageDiv = Array.from(pagesDiv).find(div => div.dataset.pageNumber === index );
+            //const index = clickedButton.getAttribute('data-index');
+            //const pagesDiv = document.querySelectorAll('.emptyPage');
+            //const pageDiv = Array.from(pagesDiv).find(div => div.dataset.pageNumber === index );
+            const pageDiv = clickedButton.parentNode;
             const photoUrl = prompt('Введите url фото');
             const photoDiscription = prompt ('Введите описание фото');
-            const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription);
-            this.photos.push(newPhoto);
             const photoDiv = document.createElement('div');
             photoDiv.classList.add('photo-div');
             photoDiv.style.position = 'absolute';
             photoDiv.style.left = '10%';
             photoDiv.style.top = '10%';
             photoDiv.style.width = '30%';
+            const posX = photoDiv.offsetLeft;
+            const posY = photoDiv.offsetTop;
+            const newPhoto = new Photo(photoNumber,photoUrl, photoDiscription, posX, posY);
+            this.photos.push(newPhoto);
             photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
             const img = document.createElement('img');
             img.src = newPhoto.url;
@@ -265,14 +271,18 @@ window.addEventListener ('load', allScript,false);
             buttonAddPhoto.remove();
             buttonFinishAdding.remove();
         }
+        static fromJSON (data) {
+            const photos = data.photos.map(photoData => Photo.fromJSON(photoData));
+            return new Page (data.pageNumber,data.numPhotos, photos);
+        }
     }
        
         
   
     class Album {
-        constructor(title) {
+        constructor(title, pages = []) {
             this.title = title; 
-            this.pages = [];
+            this.pages = pages;
         } 
         addPage(page) {
             this.pages.push(page);
@@ -290,9 +300,21 @@ window.addEventListener ('load', allScript,false);
         getPageCount() {
             return this.pages.length;
         }
+        static fromJSON (data) {
+            const pages = data.pages.map (pageData => Page.fromJSON(pageData));
+            return new Album (data.title, pages);
+        }
+        renderAlbum () {
+            const redactorField = document.getElementById('redactor-field');
+            for (let i=0; i <this.pages.length; i++) {
+                const page = this.pages[i];
+                page.displayPage();
+            }
+        }
     }
-
-    const myAlbum = new Album('Путешествия');
+   
+    
+    
 
    let numPage = 1;
     
@@ -365,6 +387,7 @@ window.addEventListener ('load', allScript,false);
             buttonAddPhoto.style.display= 'block';
         }
         
+        
         const activePage = document.querySelector('.page-div.active');
         const numActivePage = activePage.getAttribute('data-page-number');
         for (let i=0; i< myAlbum.pages.length; i++) {                         //удаляем объект photo из массива в объекте page
@@ -382,6 +405,7 @@ window.addEventListener ('load', allScript,false);
             }
         }
          console.log(myAlbum);
+         // console.log(nameAlbum);
     }
     let draggedElem = null;
     let startX, startY, startWidth, startHeight, startContainerX, startContainerY, imgX, imgY, startPageX, startPageY, startLeftBottomX, startLeftBottomY;
@@ -477,46 +501,91 @@ window.addEventListener ('load', allScript,false);
            
             document.removeEventListener ('mousemove', onMouseMove, false);
      }
-   
+    const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";  
 
-      /*class Photo {                                                 //описываем классы фото, страницы и альбом
-        constructor (containerID) {
-            this.container = document.getElementById(containerID);
-        }
-        createImage (src) {
-            const imgDiv = document.createElement('div');
-            const imgElem = document.createElement('img');
-            const closeSpan = document.createElement('span');
-            imgElem.src = src;
-            imgElem.alt = 'Ваше добавленное фото';
-            imgElem.style.width = '100px';
-            imgDiv.className = "imgDiv";
-            closeSpan.textContent= "x"
-            closeSpan.className = 'closeSpan';
-            this.container.appendChild(imgDiv);
-            imgDiv.appendChild(imgElem);
-            imgDiv.appendChild(closeSpan);
-            closeSpan.addEventListener('click', deleteImg, false);
-           
-            
+    function saveToAjax () {
+        const nameForSaving = prompt('Введите имя литанскими буквами для сохранения');
+        const myAlbumData = JSON.stringify(myAlbum);
+        let sp = new URLSearchParams();
+        sp.append('f', 'INSERT');
+        sp.append('n', `GOLOVEIKO_PHOTOALBUM_ALBUM_${nameForSaving}`);
+        sp.append('v', myAlbumData);
+        fetch(ajaxHandlerScript, { method: 'post', body: sp })
+         .then(alert('Ваш альбом успешно сохранен'))
+         .catch( error => { console.error(error); } );
+    }
 
-        }
-    }*/
+    function loadBook() {
+        const nameForLoading = prompt('Введите название фотокниги для продолжения редактирования');
+        let sp = new URLSearchParams();
+        sp.append('f', 'READ');
+        sp.append('n', `GOLOVEIKO_PHOTOALBUM_ALBUM_${nameForLoading}`);
+        fetch(ajaxHandlerScript, { method: 'post', body: sp })
+         .then( response => response.json() )
+         .then( data => { 
+            console.log(data); 
+            homePage.style.display = 'none';
+            mainPage.style.display = 'flex';
+            console.log(data.result);
+            const myAlbumData = JSON.parse(data.result);
+            const myAlbum =  Album.fromJSON(myAlbumData);
+            console.log (myAlbum);
+            for (let i=0; i <myAlbum.pages.length; i++) {
+                let page = myAlbum.pages[i];
+                page.displayPage();
+                if (i === myAlbum.pages.length-1) {
+                    const activePageNum = page.pageNumber;
+                    const pageDivs = document.querySelectorAll('.page-div');
+                    const newActivePage = Array.from(pageDivs).find(div => div.getAttribute('data-page-number') === `${activePageNum}`);
+                    newActivePage.classList.add('active');
+                }
+            }
+        } )
+         .catch( error => { console.error(error); } );
+    }
 
-   /* function addPhotoForLoad () {                                     // по вводу каждой ссылки на фото создаем новый элемент класса Photo
-        const imageURL = document.getElementById('inputUrlImg').value;
-        const imgContainer = document.getElementById ('loadedPhotosContainer');
-        if (!imageURL.includes('http') ) {
-            alert ('URL фото должен начинаться с http, попробуйте еще раз');
-        } else {
-            const img = new Photo('loadedPhotosContainer');
-            img.createImage(imageURL);
-            document.getElementById('inputUrlImg').value = '';
+     /*function saveToAjax () {
+        const nameForSaving = prompt('Введите имя литанскими буквами для сохранения');
+        const myAlbumData = JSON.stringify(myAlbum);
+        console.log(myAlbumData);
+        $.ajax(
+            {
+                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                data : { f : 'INSERT', n : `GOLOVEIKO_PHOTOALBUM_ALBUM_${nameForSaving}`, v: myAlbumData },
+                success : successSaving, error : errorHandler
+            }
+        );
+     }
+     function successSaving() {
+        alert('Ваш альбом успешно сохранен');
+     }
+
+     function loadBook() {
+        const nameForLoading = prompt('Введите название фотокниги для продолжения редактирования');
+
+        $.ajax(
+            {
+                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                data : { f : 'READ', n : `GOLOVEIKO_PHOTOALBUM_ALBUM_${nameForLoading}` },
+                success : readSavedAlbum, error : errorHandler
+            }
+        );
+     }
+    function readSavedAlbum (callresult) {
+        if ( callresult.error!=undefined )
+            alert(callresult.error);
+        else if ( callresult.result!="" ) {
+            homePage.style.display = 'none';
+            mainPage.style.display = 'flex';
+            const myAlbumData = JSON.parse(callresult.result);
+            console.log (myAlbumData);
+            const myAlbum =  Album.fromJSON(myAlbumData);
+            console.log (myAlbum);
+            myAlbum.renderAlbum();
         }
     }
 
-        function deleteImg (eo) {
-                const clickedImg = eo.currentTarget;
-                const parent =clickedImg.parentElement; 
-                parent.remove();
-        }*/
+     function errorHandler(jqXHR,statusStr,errorStr) {
+            alert(statusStr+' '+errorStr);
+    }
+     */
