@@ -16,14 +16,18 @@ window.addEventListener ('load', allScript,false);
     let photoNumber=1;
     let photoDivNum = 1;
     let numPage = 1;
+     const clickAudio=new Audio("clickMusic.mp3");
+
+     const nameOfAlbumH = document.getElementById('nameOfAlbum');
 
     function createBook() {    
         homePage.style.display = 'none';
         mainPage.style.display = 'flex';
          nameAlbum = prompt('Введите название альбома'); 
          myAlbum = new Album(nameAlbum);
+         nameOfAlbumH.textContent = `Ваш альбом ${myAlbum.title}`;
        }
-
+  
     function loadBook() {
         const nameForLoading = prompt('Введите название фотокниги для продолжения редактирования');
         let sp = new URLSearchParams();
@@ -39,6 +43,7 @@ window.addEventListener ('load', allScript,false);
             const myAlbumData = JSON.parse(data.result);
              myAlbum =  Album.fromJSON(myAlbumData);
             console.log (myAlbum);
+            nameOfAlbumH.textContent = `Ваш альбом ${myAlbum.title}`;
             numPage = myAlbum.pages.length+1;
             for (let i=0; i <myAlbum.pages.length; i++) {
                 let page = myAlbum.pages[i];
@@ -50,9 +55,15 @@ window.addEventListener ('load', allScript,false);
                         const photoDiv = document.createElement('div');
                         photoDiv.classList.add('photo-div');
                         photoDiv.style.position = 'absolute';
-                        photoDiv.style.left = '10%';
-                        photoDiv.style.top = '10%';
-                        photoDiv.style.width = '30%';
+                        photoDiv.style.left = photo.posX + 'px';
+                        photoDiv.style.top = photo.posY + 'px';
+                        if (photo.width !== undefined) {
+                            console.log ('ширина есть');
+                            photoDiv.style.width = photo.width + 'px';;
+                        } else { photoDiv.style.width = '30%';}
+                        if (photo.height !== undefined) {
+                            photoDiv.style.height = photo.height + 'px';
+                        } 
                         photoDiv.dataset.photoDivNum = photo.photoDivNum;
                         photoDivNum++;
                         const pageDivs = document.querySelectorAll('.page-div');
@@ -106,7 +117,7 @@ window.addEventListener ('load', allScript,false);
                     //debugger;
                     const photo = page.photos[i];
                     photo.displayPhoto();
-                }
+                        }
                 }
                 if (i === myAlbum.pages.length-1) {
                     const activePageNum = page.pageNumber;
@@ -117,28 +128,35 @@ window.addEventListener ('load', allScript,false);
                 
             }
         } )
-         .catch( error => { console.error(error); } );
+         .catch( error => { console.error(error);
+            alert('Вы ввели неверное название, попробуйте еще раз');
+            loadBook();
+          } );
     }
         
     
    
-
+   const redactorField = document.getElementById('redactor-field');
     document.addEventListener ('mouseup', onMouseUp, false);  
-
+    redactorField.addEventListener ('click', addActiveClass, false);
      
   
    class Photo {
-    constructor(photoNumber,url,description,posX,posY, photoDivNum) {
+    constructor(photoNumber,url,description,posX,posY, photoDivNum, width, height) {
         this.url = url;
         this.description = description;
         this.photoNumber = photoNumber;
         this.posX = posX;
         this.posY = posY;
         this.photoDivNum = photoDivNum;
+        this.width = width;
+        this.height = height;
     }
       displayPhoto () {
         const photoDivs = document.querySelectorAll('.photo-div');
         const photoDiv = Array.from(photoDivs).find(div => div.dataset.photoDivNum == this.photoDivNum );
+        const pageDiv = photoDiv.parentNode;
+        console.log(pageDiv);
         const img = document.createElement('img');
             img.src = this.url;
             img.style.width = '100%';
@@ -147,21 +165,28 @@ window.addEventListener ('load', allScript,false);
             
              photoNumber++;
             photoDiv.appendChild(img);
+            photoDiv.style.left = this.posX + 'px';
+            photoDiv.style.top = this.posY + 'px';
             const buttonDelete = document.createElement('button');
             buttonDelete.classList.add('buttonDeletePhoto');
             buttonDelete.textContent = 'удалить фото';
             photoDiv.appendChild(buttonDelete);
-            buttonDelete.addEventListener('click', deletePhoto)
-        const buttons = document.querySelectorAll('.buttonAddPhoto');
-        console.log (buttons);
-        const clickedButton = Array.from(buttons).filter(button => photoDiv.contains(button));
-        console.log (clickedButton);
-        clickedButton[0].style.display = 'none';  
+            buttonDelete.addEventListener('click', deletePhoto);
+        if (!pageDiv.classList.contains('emptyPage') ) {
+            const buttons = document.querySelectorAll('.buttonAddPhoto');
+            console.log (buttons);
+            const clickedButton = Array.from(buttons).filter(button => photoDiv.contains(button));
+            console.log (clickedButton);
+            clickedButton[0].style.display = 'none';  
+            photoDiv.style.backgroundColor = 'transparent';
+            photoDiv.style.height = 'auto';
+        }
+        
 
             
       }
       static fromJSON (data) {
-        return new Photo(data.photoNumber, data.url, data.description,data.posX, data.posY, data.photoDivNum);
+        return new Photo(data.photoNumber, data.url, data.description,data.posX, data.posY, data.photoDivNum, data.width, data.height);
       } 
    }
     class Page {
@@ -200,6 +225,7 @@ window.addEventListener ('load', allScript,false);
                 buttonAddPhoto.id = 'oneButton';
                 photoDiv.appendChild(buttonAddPhoto);
                photoDiv.addEventListener ('mousedown', onMouseDown, false);  //подписываем картинку на mousedown, чтобы можно было ее таскать
+               
                 buttonAddPhoto.addEventListener('click', () => this.createPhoto());
                 photoDiv.classList.add('one-photo');
                 pageDiv.appendChild(photoDiv);
@@ -311,7 +337,15 @@ window.addEventListener ('load', allScript,false);
         createPhoto (eo) {                                   //добавляем фото в див-контейнер
            const clickedButton = event.target;
            console.log (clickedButton);
-            const photoUrl = prompt('Введите url фото');
+            let photoUrl = prompt('Введите url фото');
+            if (!photoUrl) {
+                alert ('Вы ничего не ввели, попробуйте еще раз');
+                photoUrl = prompt('Введите url фото');
+            }
+            if (!photoUrl.includes("http")) {
+                alert ('Ваша строка не похожа на URL, попробуйте еще раз');
+                photoUrl = prompt('Введите url фото');
+            }
             const photoDiscription = prompt ('Введите описание фото');
            const photoDivClicked = clickedButton.parentNode;
            const posX = photoDivClicked.offsetLeft;
@@ -484,7 +518,15 @@ window.addEventListener ('load', allScript,false);
     function deletePhoto (eo) {                  // удаляем фото с экрана и возвращаем кнопку добавить фото
          const clickedButton = eo.target;
          const clickedDiv = clickedButton.parentNode;
+         const pageDiv = clickedDiv.parentNode;
          const childrenElems = clickedDiv.childNodes;
+           if (clickedDiv.classList.contains ('four-photo')) {
+            clickedDiv.style.height = '200px';
+        } else {
+            clickedDiv.style.height = '500px';
+        }
+        
+        clickedDiv.style.backgroundColor = 'bisque';
          let clickedImg;
          for (let i = 0; i < childrenElems.length; i++) {
             const element = childrenElems[i];
@@ -493,10 +535,14 @@ window.addEventListener ('load', allScript,false);
                 break; 
               }
         }
+         if (pageDiv. classList.contains('emptyPage')  ) {
+            pageDiv.removeChild(clickedDiv);
+         }
         const numberOfClickedImg = clickedImg.getAttribute('data-photo-number');
         clickedDiv.removeChild(clickedImg);
         clickedDiv.removeChild(clickedButton);
         const buttonAddPhoto = clickedDiv.childNodes[0];
+      
         if (buttonAddPhoto) {
             buttonAddPhoto.style.display= 'block';
         }
@@ -555,23 +601,41 @@ window.addEventListener ('load', allScript,false);
                
             if (draggedElem.tagName === 'IMG')  {
                 const container = draggedElem.parentNode;
-                const page = container.parentNode;
-               
+                const pageDiv = container.parentNode;
+              const photoDivNum = container.getAttribute('data-photo-div-num');
+              const numPage = pageDiv.getAttribute('data-page-number');
               container.style.left=(eo.clientX - imgX) +"px";   //перемещаем координаты клика по курсору
               container.style.top=(eo.clientY- imgY) +"px";
 
               if (container.offsetLeft < 0) {
                 container.style.left = '0px';
+                 clickSound();
               }
               if (container.offsetTop < 0) {
                 container.style.top = '0px';
+                 clickSound();
               }
-              if (container.offsetLeft + container.offsetWidth > page.offsetWidth) {
-                container.style.left = page.offsetWidth - container.offsetWidth + 'px';
+              if (container.offsetLeft + container.offsetWidth > pageDiv.offsetWidth) {
+                container.style.left = pageDiv.offsetWidth - container.offsetWidth + 'px';
+                 clickSound();
               }
-              if (container.offsetTop + container.offsetHeight > page.offsetHeight) {
-                container.style.top = page.offsetHeight - container.offsetHeight + 'px';
+              if (container.offsetTop + container.offsetHeight > pageDiv.offsetHeight) {
+                container.style.top = pageDiv.offsetHeight - container.offsetHeight + 'px';
+                 clickSound();
               }
+               for (let i=0; i< myAlbum.pages.length; i++) {                         //перезаписываем posX posY photo в массива в объекте page
+            const page = myAlbum.pages[i];
+            if (page.pageNumber == numPage) {
+                for (let i=0; i<page.photos.length; i++) {
+                    const photo = page.photos[i];
+                    if (photo.photoDivNum == photoDivNum) {
+                        photo.posX = container.offsetLeft;
+                        photo.posY = container.offsetTop;
+                    }
+                }
+            }
+        }
+              
               
             }
             if (draggedElem.className === 'elemResize') {
@@ -579,7 +643,9 @@ window.addEventListener ('load', allScript,false);
                 const newX = eo.clientX - startX;   //насколько переместилось
                 const newY = eo.clientY - startY;
                 const container = draggedElem.parentNode;
-                const page = container.parentNode;
+                const pageDiv = container.parentNode;
+                const photoDivNum = container.getAttribute('data-photo-div-num');
+                const numPage = pageDiv.getAttribute('data-page-number');
                 switch (draggedElem.getAttribute('data-size')) {
                     case 'tr' :
                         container.style.height = startHeight - newY +'px';
@@ -604,6 +670,21 @@ window.addEventListener ('load', allScript,false);
                  
                         break;
                 }
+                  for (let i=0; i< myAlbum.pages.length; i++) {                         //перезаписываем posX posY photo в массива в объекте page
+                        const page = myAlbum.pages[i];
+                        if (page.pageNumber == numPage) {
+                    for (let i=0; i<page.photos.length; i++) {
+                    const photo = page.photos[i];
+                    if (photo.photoDivNum == photoDivNum) {
+                        photo.posX = container.offsetLeft;
+                        photo.posY = container.offsetTop;
+                        photo.width = container.offsetWidth;
+                        photo.height = container.offsetHeight;
+                        
+                    }
+                }
+            }
+        }
             }
                 
      }
@@ -616,6 +697,122 @@ window.addEventListener ('load', allScript,false);
            
             document.removeEventListener ('mousemove', onMouseMove, false);
      }
+
+     function addActiveClass (eo) {
+         eo=eo||window.event;
+            eo.preventDefault();
+        const clickedElem = eo.target;
+        console.log (clickedElem);
+        if (clickedElem.classList.contains('photo-in-div')) {
+            const activePhotos = document.querySelectorAll ('.activePhoto');
+            console.log (activePhotos);
+             activePhotos.forEach(activePhoto => {
+                    activePhoto.classList.remove('activePhoto');
+                });
+            const photoDiv = clickedElem.parentNode;
+            photoDiv.classList.toggle('activePhoto');
+        } else {
+            const activePhotos = document.querySelectorAll ('.activePhoto');
+             activePhotos.forEach(activePhoto => {
+                    activePhoto.classList.remove('activePhoto');
+                });
+        }
+     }
+
+      setInterval(tick,40);                                  // перемещение по клавиатуре и кнопкам
+      let speedX = 0;
+      let speedY = 0;
+      
+     function tick () {
+        if (document.querySelector('.activePhoto')) {
+            const activePhotoDiv = document.querySelector('.activePhoto')
+            const pageDiv = activePhotoDiv.parentNode;
+            const numPage = pageDiv.getAttribute('data-page-number');
+            const photoDivNum = activePhotoDiv.getAttribute('data-photo-div-num');
+            activePhotoDiv.style.left = activePhotoDiv.offsetLeft + speedX + 'px';
+            activePhotoDiv.style.top = activePhotoDiv.offsetTop + speedY + 'px';
+            if (activePhotoDiv.offsetLeft < 0) {
+                activePhotoDiv.style.left = '0px';
+                 clickSound();
+              }
+              if (activePhotoDiv.offsetTop < 0) {
+                activePhotoDiv.style.top = '0px';
+                 clickSound();
+              }
+              if (activePhotoDiv.offsetLeft + activePhotoDiv.offsetWidth > pageDiv.offsetWidth) {
+                activePhotoDiv.style.left = pageDiv.offsetWidth - activePhotoDiv.offsetWidth + 'px';
+                 clickSound();
+              }
+              if (activePhotoDiv.offsetTop + activePhotoDiv.offsetHeight > pageDiv.offsetHeight) {
+                activePhotoDiv.style.top = pageDiv.offsetHeight - activePhotoDiv.offsetHeight + 'px';
+                 clickSound();
+              }
+               for (let i=0; i< myAlbum.pages.length; i++) {                         //перезаписываем posX posY photo в массива в объекте page
+                        const page = myAlbum.pages[i];
+                        if (page.pageNumber == numPage) {
+                    for (let i=0; i<page.photos.length; i++) {
+                    const photo = page.photos[i];
+                    if (photo.photoDivNum == photoDivNum) {
+                        photo.posX = activePhotoDiv.offsetLeft;
+                        photo.posY = activePhotoDiv.offsetTop;
+                        photo.width = activePhotoDiv.offsetWidth;
+                        photo.height = activePhotoDiv.offsetHeight;
+                        
+                    }
+                }
+            }
+        }
+        }
+        
+     }
+        document.addEventListener ('keydown', photoMove, false);
+        document.addEventListener ('keyup', photoStop, false);
+
+        function photoMove (eo) {
+                eo=eo||window.event;
+                eo.preventDefault();
+                if (eo.keyCode === 37){
+                    speedX = -1;
+                }
+                if (eo.keyCode === 39){
+                    speedX = 1;
+                }
+                if (eo.keyCode === 38){
+                    speedY = -1;
+                }
+                if (eo.keyCode === 40){
+                   speedY = 1;
+                }
+             }
+        function photoRight (eo) {
+            eo=eo||window.event;
+            eo.preventDefault();
+            speedX = 1;
+        }
+        function photoDown (eo) {
+            eo=eo||window.event;
+            eo.preventDefault();
+            speedY = 1;
+        }
+        function photoLeft (eo) {
+            eo=eo||window.event;
+            eo.preventDefault();
+            speedX = -1;
+        }
+        function photoTop (eo) {
+            eo=eo||window.event;
+            eo.preventDefault();
+            speedY = -1;
+        }
+        function photoStop (eo) {
+                eo=eo||window.event;
+                eo.preventDefault();
+            
+                   speedX = 0;
+                   speedY = 0;
+             }
+
+
       const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";  
 
     function saveToAjax () {
@@ -630,7 +827,15 @@ window.addEventListener ('load', allScript,false);
          .catch( error => { console.error(error); } );
     }
 
-    
+     function clickSoundInit() {
+        clickAudio.play(); // запускаем звук
+        clickAudio.pause(); // и сразу останавливаем
+    }
+
+    function clickSound() {
+        clickAudio.currentTime=0; // в секундах
+        clickAudio.play();
+    }
 
    
 

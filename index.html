@@ -24,7 +24,8 @@
             
         </div>
         <div id="mainPage">
-            <div id="toolbar"></div>
+            <!--<div id="toolbar"></div>-->
+            <h1 id="nameOfAlbum"></h1>
             <div id="loadedPhotos">
                 <!--<p>Введите ссылку URL для добавления фото</p>
                 <input type="text" id="inputUrlImg">
@@ -33,18 +34,32 @@
             </div>
             <div id="constructor">
                 <div id="redactor-field"></div>
-                <button class="prev" onclick="prevPage()">Назад</button>
-                <button class="next" onclick="nextPage()">Вперёд</button>
+                <button class="prev" onclick="prevPage()"><svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24" height="24"><path d="M17.17,24a1,1,0,0,1-.71-.29L8.29,15.54a5,5,0,0,1,0-7.08L16.46.29a1,1,0,1,1,1.42,1.42L9.71,9.88a3,3,0,0,0,0,4.24l8.17,8.17a1,1,0,0,1,0,1.42A1,1,0,0,1,17.17,24Z"/></svg>
+</button>
+                <button class="next" onclick="nextPage()"><svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24" height="24"><path d="M7,24a1,1,0,0,1-.71-.29,1,1,0,0,1,0-1.42l8.17-8.17a3,3,0,0,0,0-4.24L6.29,1.71A1,1,0,0,1,7.71.29l8.17,8.17a5,5,0,0,1,0,7.08L7.71,23.71A1,1,0,0,1,7,24Z"/></svg></button>
                 
-                <div id="list-pages">
-                    <button class="type-of-page" onclick="createPage(1)">1</button>
-                    <button class="type-of-page" onclick="createPage(2)">2</button>
-                    <button class="type-of-page" onclick="createPage(3)">3</button>
-                    <button class="type-of-page" onclick="createPage(4)">4</button>
-                    <button class="type-of-page" onclick="createPage(0)">0</button>
-                    <br>
-                    <button onclick="saveToAjax()">Сохранить проект</button>
+                <div id="toolBar">
+                    <div class="list-pages"> 
+                        <p>Выберите вид страницы</p>
+                        <button class="type-of-page" onclick="createPage(1)">1 фото</button>
+                        <button class="type-of-page" onclick="createPage(2)">2 фото</button>
+                        <button class="type-of-page" onclick="createPage(3)">3 фото</button>
+                        <button class="type-of-page" onclick="createPage(4)">4 фото</button>
+                        <button class="type-of-page" onclick="createPage(0)">Пустая страница</button>
+                    </div>
+                    <div class="arrows">
+                        <button class="arrow" onmousedown="photoRight()" onmouseup="photoStop()"><img src='images/arrow1.svg'></button>
+                        <button class="arrow" onmousedown="photoDown()" onmouseup="photoStop()"><img src='images/arrow2.svg'></button>
+                        <button class="arrow" onmousedown="photoLeft()" onmouseup="photoStop()"><img src='images/arrow3.svg'></button>
+                        <button class="arrow" onmousedown="photoTop()" onmouseup="photoStop()"><img src='images/arrow4.svg'></button>
+                        <button class="arrow" ><img  src="https://img.icons8.com/fluency/48/rotate.png" alt="rotate"/></button>
+                        
+                    </div>
+                    <div>
+                        <button onclick="saveToAjax()">Сохранить проект</button>
+                    </div>
                 </div>
+                
             </div>
             
         </div>

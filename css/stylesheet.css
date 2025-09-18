@@ -109,53 +109,36 @@ li {
       transition: 1s; }
   .container #mainPage {
     display: none;
-    -webkit-box-orient: horizontal;
+    -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 100%;
     font-size: 14px; }
+    .container #mainPage h1 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      font-style: italic; }
     .container #mainPage #toolbar {
       width: 5%;
-      height: 100vh;
+      height: 50px;
       border: solid black 1px; }
     .container #mainPage #loadedPhotos {
-      width: 20%;
-      height: 100vh;
+      width: 100%;
+      height: 50px;
       border: solid black 1px; }
-      .container #mainPage #loadedPhotos .imgDiv {
-        width: 110px;
-        padding: 5px;
-        position: relative;
-        display: inline-block; }
-      .container #mainPage #loadedPhotos .closeSpan {
-        display: none;
-        width: 20px;
-        height: 20px;
-        text-align: center;
-        background-color: red;
-        position: absolute;
-        color: white;
-        border-radius: 50%;
-        font-size: 12px;
-        line-height: 20px;
-        font-family: serif;
-        left: 90px;
-        top: 0px; }
-      .container #mainPage #loadedPhotos .closeSpan:hover {
-        cursor: pointer; }
-      .container #mainPage #loadedPhotos .imgDiv:hover img {
-        border: solid blue 2px; }
-      .container #mainPage #loadedPhotos .imgDiv:hover .closeSpan {
-        display: block; }
     .container #mainPage #constructor {
-      width: 70%;
-      height: 710px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+      min-height: 710px;
       border: solid black 1px;
       overflow: hidden;
       position: relative; }
       .container #mainPage #constructor #redactor-field {
-        width: 100%;
+        width: 85%;
         min-height: 600px;
         border: solid black 1px;
         display: -webkit-box;
@@ -211,6 +194,8 @@ li {
             display: block; }
           .container #mainPage #constructor #redactor-field .page-div .photo-div:hover .elemResize {
             display: block; }
+          .container #mainPage #constructor #redactor-field .page-div .photo-div.activePhoto {
+            border: blueviolet solid 2px; }
           .container #mainPage #constructor #redactor-field .page-div .buttonAddPhoto {
             position: absolute; }
           .container #mainPage #constructor #redactor-field .page-div .buttonFinishAdding {
@@ -249,10 +234,95 @@ li {
         .container #mainPage #constructor #redactor-field .page-div.next {
           -webkit-transform: translateX(-100%);
                   transform: translateX(-100%); }
-      .container #mainPage #constructor #list-pages {
-        width: 100%;
-        border: solid black 1px;
-        height: 100px;
+      .container #mainPage #constructor .prev {
+        width: 3%;
+        padding: 0; }
+      .container #mainPage #constructor .next {
+        width: 3%;
+        padding: 0; }
+      .container #mainPage #constructor #toolBar {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        width: 9%;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        text-align: center;
         margin-top: 10px; }
+        .container #mainPage #constructor #toolBar .list-pages {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column;
+          margin: 20px auto; }
+          .container #mainPage #constructor #toolBar .list-pages button {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            -webkit-transition: background-color 0.3s ease, -webkit-transform 0.2s ease;
+            transition: background-color 0.3s ease, -webkit-transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease, -webkit-transform 0.2s ease;
+            -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 5px; }
+          .container #mainPage #constructor #toolBar .list-pages button:hover {
+            background-color: #0056b3;
+            -webkit-transform: translateY(-2px);
+                    transform: translateY(-2px);
+            -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+        .container #mainPage #constructor #toolBar .arrows {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column; }
+          .container #mainPage #constructor #toolBar .arrows button {
+            -webkit-transition: -webkit-transform 0.2s ease;
+            transition: -webkit-transform 0.2s ease;
+            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+            background-color: transparent;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            width: 40px;
+            margin: 5px; }
+            .container #mainPage #constructor #toolBar .arrows button img {
+              width: 100%; }
+            .container #mainPage #constructor #toolBar .arrows button button:hover {
+              -webkit-transform: scale(1.2);
+                      transform: scale(1.2);
+              -webkit-transform: translateY(-2px);
+                      transform: translateY(-2px);
+              -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+                      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
 
 /*# sourceMappingURL=stylesheet.css.map */
