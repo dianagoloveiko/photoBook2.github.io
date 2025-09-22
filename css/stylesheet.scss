@@ -355,6 +355,22 @@ li {
                         
                     }
                 }
+                #saveButton {
+                    background:  #007bff;
+                    border: none;
+                    border-radius: 25px;
+                    color: white;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: 0.5s;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+                    margin-top: 40px;
+                }
+                #saveButton:hover {
+                    transform: scale (1.1);
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);;
+                }
                 
             }
 

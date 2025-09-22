@@ -85,7 +85,7 @@ window.addEventListener ('load', allScript,false);
                         sizeElem.classList.add('elemResize');
                         photoDiv.appendChild(sizeElem);
                         sizeElem.addEventListener ('mousedown', onMouseDown, false);
-                        sizeElem.addEventListener ('touchstart', onMouseDown);
+                        
                         console.log (photoDiv.offsetWidth);
                             console.log (sizeElem.offsetWidth);
                         switch (i) {
@@ -139,7 +139,7 @@ window.addEventListener ('load', allScript,false);
    
    const redactorField = document.getElementById('redactor-field');
     document.addEventListener ('mouseup', onMouseUp, false);  
-    redactorField.addEventListener ('touchend', onMouseUp, false);  
+    
     redactorField.addEventListener ('click', addActiveClass, false);
      
   
@@ -595,9 +595,9 @@ window.addEventListener ('load', allScript,false);
         startPageY = page.offsetTop;
             document.addEventListener ('mousemove', onMouseMove, false); 
         
-        if (draggedElem.classList.contains ('elemResize')) {
-            draggedElem.addEventListener ('touchmove', onMouseMove, false);
-        }
+        
+          
+        
             
         
     }
@@ -703,7 +703,7 @@ window.addEventListener ('load', allScript,false);
             } 
            
             document.removeEventListener ('mousemove', onMouseMove, false);
-            redactorField.removeEventListener ('touchmove', onMouseMove, false);
+          
      }
 
      function addActiveClass (eo) {

@@ -361,6 +361,24 @@ li {
                     transform: translateY(-2px);
             -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
                     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+        .container #mainPage #constructor #toolBar #saveButton {
+          background: #007bff;
+          border: none;
+          border-radius: 25px;
+          color: white;
+          padding: 5px 10px;
+          cursor: pointer;
+          font-size: 16px;
+          -webkit-transition: 0.5s;
+          transition: 0.5s;
+          -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+                  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+          margin-top: 40px; }
+        .container #mainPage #constructor #toolBar #saveButton:hover {
+          -webkit-transform: scale 1.1;
+                  transform: scale 1.1;
+          -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
 
 @media all and (max-width: 700px) {
   #homePage .img-container {
