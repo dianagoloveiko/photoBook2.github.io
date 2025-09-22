@@ -323,3 +323,14 @@ li {
     }
 }
 
+@media all and (max-width: 700px) {
+    #homePage {
+        .img-container {
+            flex-direction: column;
+        }
+    }
+    #mainPage {
+        
+    }
+}
+

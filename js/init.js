@@ -753,8 +753,8 @@ window.addEventListener ('load', allScript,false);
                     for (let i=0; i<page.photos.length; i++) {
                     const photo = page.photos[i];
                     if (photo.photoDivNum == photoDivNum) {
-                        photo.posX = activePhotoDiv.offsetLeft;
-                        photo.posY = activePhotoDiv.offsetTop;
+                        photo.posX = activePhotoDiv.offsetLeft + speedX;
+                        photo.posY = activePhotoDiv.offsetTop + speedY;
                         photo.width = activePhotoDiv.offsetWidth;
                         photo.height = activePhotoDiv.offsetHeight;
                         
