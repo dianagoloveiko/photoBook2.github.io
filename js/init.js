@@ -85,6 +85,7 @@ window.addEventListener ('load', allScript,false);
                         sizeElem.classList.add('elemResize');
                         photoDiv.appendChild(sizeElem);
                         sizeElem.addEventListener ('mousedown', onMouseDown, false);
+                        sizeElem.addEventListener ('touchstart', onMouseDown);
                         console.log (photoDiv.offsetWidth);
                             console.log (sizeElem.offsetWidth);
                         switch (i) {
