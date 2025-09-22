@@ -593,8 +593,12 @@ window.addEventListener ('load', allScript,false);
         startContainerY = container.offsetTop; 
         startPageX = page.offsetLeft;
         startPageY = page.offsetTop;
-            document.addEventListener ('mousemove', onMouseMove, false);  
+            document.addEventListener ('mousemove', onMouseMove, false); 
+        
+        if (draggedElem.classList.contains ('elemResize')) {
             redactorField.addEventListener ('touchmove', onMouseMove, false);
+        }
+            
         
     }
      function onMouseMove (eo) {
@@ -850,6 +854,10 @@ window.addEventListener ('load', allScript,false);
         if ( navigator.vibrate ) {
                 window.navigator.vibrate(100);
         }
+    }
+
+    function changeBackground(color) {
+
     }
    
 

@@ -320,13 +320,13 @@ li {
             margin: 5px; }
             .container #mainPage #constructor #toolBar .arrows button img {
               width: 100%; }
-            .container #mainPage #constructor #toolBar .arrows button button:hover {
-              -webkit-transform: scale(1.2);
-                      transform: scale(1.2);
-              -webkit-transform: translateY(-2px);
-                      transform: translateY(-2px);
-              -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-                      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
+          .container #mainPage #constructor #toolBar .arrows button:hover {
+            -webkit-transform: scale(1.2);
+                    transform: scale(1.2);
+            -webkit-transform: translateY(-2px);
+                    transform: translateY(-2px);
+            -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); }
 
 @media all and (max-width: 700px) {
   #homePage .img-container {
