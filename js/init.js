@@ -734,18 +734,22 @@ window.addEventListener ('load', allScript,false);
             if (activePhotoDiv.offsetLeft < 0) {
                 activePhotoDiv.style.left = '0px';
                  clickSound();
+                 vibro();
               }
               if (activePhotoDiv.offsetTop < 0) {
                 activePhotoDiv.style.top = '0px';
                  clickSound();
+                 vibro();
               }
               if (activePhotoDiv.offsetLeft + activePhotoDiv.offsetWidth > pageDiv.offsetWidth) {
                 activePhotoDiv.style.left = pageDiv.offsetWidth - activePhotoDiv.offsetWidth + 'px';
                  clickSound();
+                 vibro();
               }
               if (activePhotoDiv.offsetTop + activePhotoDiv.offsetHeight > pageDiv.offsetHeight) {
                 activePhotoDiv.style.top = pageDiv.offsetHeight - activePhotoDiv.offsetHeight + 'px';
                  clickSound();
+                 vibro();
               }
                for (let i=0; i< myAlbum.pages.length; i++) {                         //перезаписываем posX posY photo в массива в объекте page
                         const page = myAlbum.pages[i];
@@ -837,6 +841,12 @@ window.addEventListener ('load', allScript,false);
         clickAudio.play();
     }
 
+    function vibro() {
+        // есть поддержка Vibration API?
+        if ( navigator.vibrate ) {
+                window.navigator.vibrate(100);
+        }
+    }
    
 
      /*function saveToAjax () {
