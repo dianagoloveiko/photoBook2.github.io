@@ -139,7 +139,7 @@ window.addEventListener ('load', allScript,false);
    
    const redactorField = document.getElementById('redactor-field');
     document.addEventListener ('mouseup', onMouseUp, false);  
-    document.addEventListener ('touchend', onMouseUp, false);  
+    redactorField.addEventListener ('touchend', onMouseUp, false);  
     redactorField.addEventListener ('click', addActiveClass, false);
      
   
@@ -594,7 +594,7 @@ window.addEventListener ('load', allScript,false);
         startPageX = page.offsetLeft;
         startPageY = page.offsetTop;
             document.addEventListener ('mousemove', onMouseMove, false);  
-            document.addEventListener ('touchmove', onMouseMove, false);
+            redactorField.addEventListener ('touchmove', onMouseMove, false);
         
     }
      function onMouseMove (eo) {
@@ -699,7 +699,7 @@ window.addEventListener ('load', allScript,false);
             } 
            
             document.removeEventListener ('mousemove', onMouseMove, false);
-            document.removeEventListener ('touchmove', onMouseMove, false);
+            redactorField.removeEventListener ('touchmove', onMouseMove, false);
      }
 
      function addActiveClass (eo) {
