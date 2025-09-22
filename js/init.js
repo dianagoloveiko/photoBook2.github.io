@@ -596,7 +596,7 @@ window.addEventListener ('load', allScript,false);
             document.addEventListener ('mousemove', onMouseMove, false); 
         
         if (draggedElem.classList.contains ('elemResize')) {
-            redactorField.addEventListener ('touchmove', onMouseMove, false);
+            draggedElem.addEventListener ('touchmove', onMouseMove, false);
         }
             
         
@@ -857,7 +857,14 @@ window.addEventListener ('load', allScript,false);
     }
 
     function changeBackground(color) {
-
+        const computedStyle = window.getComputedStyle(redactorField);
+        const activeColor = computedStyle.background;
+       
+        
+        redactorField.style.background = 'black';
+        setTimeout( () => {
+             redactorField.style.background = color; 
+        }, 1000);
     }
    
 

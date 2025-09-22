@@ -127,7 +127,38 @@ li {
     .container #mainPage #loadedPhotos {
       width: 100%;
       height: 50px;
-      border: solid black 1px; }
+      border: solid black 1px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+      .container #mainPage #loadedPhotos button {
+        width: 40px;
+        height: 30px;
+        border: black solid 1px;
+        border-radius: 10px;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        cursor: pointer; }
+      .container #mainPage #loadedPhotos button:nth-child(1) {
+        background-color: white; }
+      .container #mainPage #loadedPhotos button:nth-child(2) {
+        background-color: ivory; }
+      .container #mainPage #loadedPhotos button:nth-child(3) {
+        background-color: lavender; }
+      .container #mainPage #loadedPhotos button:nth-child(4) {
+        background-color: lightcyan; }
+      .container #mainPage #loadedPhotos button:nth-child(5) {
+        background-color: mistyrose; }
+      .container #mainPage #loadedPhotos button:nth-child(6) {
+        background-color: gainsboro; }
+      .container #mainPage #loadedPhotos button:hover {
+        -webkit-transform: scale(1.3);
+                transform: scale(1.3); }
     .container #mainPage #constructor {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -149,7 +180,10 @@ li {
             -ms-flex-align: center;
                 align-items: center;
         position: relative;
-        overflow: hidden; }
+        overflow: hidden;
+        background-color: white;
+        -webkit-transition: background-color 1s ease;
+        transition: background-color 1s ease; }
         .container #mainPage #constructor #redactor-field .page-div {
           width: 95%;
           border: solid black 1px;
