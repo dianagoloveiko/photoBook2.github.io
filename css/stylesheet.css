@@ -380,11 +380,33 @@ li {
           -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
                   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
 
-@media all and (max-width: 700px) {
-  #homePage .img-container {
+@media all and (max-width: 1200px) {
+  .container #mainPage #constructor {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
-            flex-direction: column; } }
+            flex-direction: column; }
+    .container #mainPage #constructor #redactor-field {
+      width: 95%; }
+    .container #mainPage #constructor .prev {
+      width: 100%; }
+    .container #mainPage #constructor .next {
+      width: 100%; }
+    .container #mainPage #constructor #toolBar {
+      width: 100%; }
+      .container #mainPage #constructor #toolBar .list-pages {
+        width: 100%;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between; }
+      .container #mainPage #constructor #toolBar .arrows {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row; } }
 
 /*# sourceMappingURL=stylesheet.css.map */

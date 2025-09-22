@@ -379,14 +379,36 @@ li {
     }
 }
 
-@media all and (max-width: 700px) {
-    #homePage {
-        .img-container {
+@media all and (max-width: 1200px) {
+   .container {
+         #mainPage {
+        #constructor {
             flex-direction: column;
+           #redactor-field {
+                width: 95%;
+             }
+            .prev {
+                width: 100%;
+            }
+            .next {
+                width: 100%;
+            }
+            #toolBar {
+                width: 100%;
+                .list-pages {
+                    width: 100%;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+                .arrows {
+                    flex-direction: row;
+            }
+            }
+            
         }
+        
+          
     }
-    #mainPage {
-
-    }
+   }
+   
 }
-
